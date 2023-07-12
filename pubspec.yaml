@@ -39,7 +39,9 @@ dependencies:
   firebase_auth: ^4.6.3
   cloud_firestore: ^4.8.2
   firebase_core: ^2.14.0
-  scaffold_gradient_background:
+  provider: ^6.0.5
+
+
 
 dev_dependencies:
   flutter_test:

@@ -27,15 +27,15 @@ class _SignInState extends State<SignIn> {
           child: Text("sign in "),
 
           onPressed: () async {
-            dynamic result = await _auth.SignInAnon();
+            dynamic result = await _auth.signInAnon();
             if (result == null)
             {
               print("error signing in ") ;
             }
             else
              {
-               print("sign in ") ;
-            print(result);
+             //  print("sign in ") ;
+            //print(result.uid);
 
             }
 
