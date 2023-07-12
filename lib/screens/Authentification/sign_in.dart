@@ -3,7 +3,9 @@ import 'package:sign_in/Services/auth.dart';
 
 
 class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+  final Function  toggleView;
+  SignIn({required this.toggleView});
+
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -11,45 +13,67 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
+
+
+
+  // text field state
+  String email = '';
+  String password = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-      Colors.blueGrey[100],
+      backgroundColor: Colors.brown[100],
       appBar: AppBar(
-        backgroundColor:Colors.blueGrey[400] ,
+        backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text("Sign In "),
+        title: Text('Sign in '),
+        actions: <Widget>[
+          TextButton.icon(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            ),
+            icon: Icon(Icons.person),
+            label: Text('Register'),
+            onPressed: ()  {
+              widget.toggleView();
+
+            },
+          ),
+        ],
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20 , horizontal: 50),
-        child: ElevatedButton(
-          child: Text("sign in "),
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+        child: Form(
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 20.0),
+              TextFormField(
+                onChanged: (val) {
+                  setState(() => email = val);
+                },
+              ),
+              SizedBox(height: 20.0),
+              TextFormField(
+                obscureText: true,
+                onChanged: (val) {
+                  setState(() => password = val);
+                },
+              ),
+              SizedBox(height: 20.0),
+              ElevatedButton(
 
-          onPressed: () async {
-            dynamic result = await _auth.signInAnon();
-            if (result == null)
-            {
-              print("error signing in ") ;
-            }
-            else
-             {
-             //  print("sign in ") ;
-            //print(result.uid);
+                  child: Text(
+                    'Sign In',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: ()  {
 
-            }
-
-          },
+                  }
+              ),
+            ],
+          ),
         ),
-
-
       ),
-
-
-
-
-
-
     );
   }
 }
