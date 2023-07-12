@@ -11,12 +11,16 @@ class home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
 
+      backgroundColor: Colors.blueAccent[50],
       appBar: AppBar(
-        title: Text('Brew Crew'),
-        backgroundColor: Colors.brown[400],
+        title: Text('Home Page'),
+        backgroundColor: Colors.blueAccent[400],
         elevation: 0.0,
         actions: <Widget>[
           TextButton.icon(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            ),
             icon: Icon(Icons.person),
             label: Text('logout'),
             onPressed: () async {
