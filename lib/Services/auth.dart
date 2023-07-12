@@ -41,7 +41,34 @@ Users? _userFromFireBaseUser(User? user) {
 }
   // sign_in with email and pwd
 
+  Future signinWithEmailAndPassword(String email , String password)async
+  {
+    try{
+      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      User? user = result.user;
+      return _userFromFireBaseUser(user);
+    }
+        catch(e)
+        {
+          print (e.toString());
+          return null ;
+
+        }
+  }
+
   // register with email and pwd
+  Future registerWithEmailAndPassword(String email , String password) async
+  {
+    try{
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      User? user = result.user;
+      return _userFromFireBaseUser(user);
+    }
+    catch(e){print (e.toString());
+      return null ;
+    }
+
+  }
 
   // sign out
 

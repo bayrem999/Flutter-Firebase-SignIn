@@ -17,7 +17,7 @@ class _splachState extends State<splach> with SingleTickerProviderStateMixin{
     
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    Future.delayed(Duration(seconds: 10) ,  () {
+    Future.delayed(Duration(seconds: 5) ,  () {
 
       Navigator.of(context).pushReplacement(
 
