@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sign_in/Services/auth.dart';
+import 'package:sign_in/screens/Authentification/ForgotPass.dart';
 
 
 class SignIn extends StatefulWidget {
@@ -27,6 +28,7 @@ class _SignInState extends State<SignIn> {
     return Scaffold(
       backgroundColor: Colors.blueGrey[100],
       appBar: AppBar(
+
         backgroundColor: Colors.blueGrey[400],
         elevation: 0.0,
         title: Text('Sign in '),
@@ -52,6 +54,10 @@ class _SignInState extends State<SignIn> {
             children: <Widget>[
               SizedBox(height: 20.0),
               TextFormField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter an email',
+                ),
                 validator: (val) => val!.isEmpty ? 'enter an email ' : null,
                 onChanged: (val) {
                   setState(() => email = val);
@@ -59,6 +65,10 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter a password',
+                ),
                 validator: (val) => val!.length < 6 ? 'password too short ' : null,
                 obscureText: true,
                 onChanged: (val) {
@@ -66,6 +76,18 @@ class _SignInState extends State<SignIn> {
                 },
               ),
               SizedBox(height: 20.0),
+
+              GestureDetector(
+                  onTap: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context)
+                        {
+                          return ForgotPass();
+                        }),);
+
+                  },
+                  child: Text(" Forgot password ? " , style:TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,) ,)),
+
               ElevatedButton(
 
                   child: Text(
@@ -88,6 +110,8 @@ class _SignInState extends State<SignIn> {
 
                   }
               ),
+
+
               SizedBox(height: 12.0),
               Text(
                 error,

@@ -56,6 +56,20 @@ Users? _userFromFireBaseUser(User? user) {
         }
   }
 
+
+  // reset password
+
+  Future ResetPassword(String email) async {
+   try{
+     await _auth.sendPasswordResetEmail(email: email);
+  }catch(e)
+   {
+     print(e);
+   }
+
+}
+
+
   // register with email and pwd
   Future registerWithEmailAndPassword(String email , String password) async
   {
@@ -80,6 +94,8 @@ Users? _userFromFireBaseUser(User? user) {
       return null;
     }
   }
+
+
 
 
 }
