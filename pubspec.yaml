@@ -40,6 +40,8 @@ dependencies:
   cloud_firestore: ^4.8.2
   firebase_core: ^2.14.0
   provider: ^6.0.5
+  animated_splash_screen: ^1.3.0
+  lottie: ^2.5.0
 
 
 
@@ -61,6 +63,8 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/user.png
+    - assets/animations/loading-circles.json
+    - assets/animations/access.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
