@@ -142,6 +142,7 @@ class _SignInState extends State<SignIn> {
     );*/
 
      Scaffold(
+
         body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -157,16 +158,22 @@ class _SignInState extends State<SignIn> {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
     SizedBox(height: 80,),
-    Padding(
+    const Padding(
     padding: EdgeInsets.all(20),
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-     Text("Login", style: TextStyle(color: Colors.white, fontSize: 40),),
-    SizedBox(height: 10,),
-    Text("Welcome Back", style: TextStyle(color: Colors.white, fontSize: 18),),
-    ],
-    ),
+
+
+       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+         Text("Login", style: TextStyle(color: Colors.white, fontSize: 40),),
+        SizedBox(height: 10,),
+        Text("Welcome Back", style: TextStyle(color: Colors.white, fontSize: 18),),
+        ],
+        ),
+
+
+
+
     ),
     SizedBox(height: 20),
     Expanded(
@@ -225,7 +232,16 @@ class _SignInState extends State<SignIn> {
                 ),
               ),
               SizedBox(height: 40,),
-               Text("Forgot Password?", style: TextStyle(color: Colors.grey),),
+              GestureDetector(
+                  onTap: (){
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context)
+                      {
+                        return ForgotPass();
+                      }),);
+
+                  },
+                  child: Text(" Forgot password ? " , style:TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,) ,)),
               SizedBox(height: 40,),
                Container(
                 height: 50,
@@ -238,7 +254,14 @@ class _SignInState extends State<SignIn> {
                   child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                 ),
               ),
-              SizedBox(height: 50,),
+
+              TextButton(onPressed: ()  {
+                widget.toggleView();
+
+              },  child: Text('you dont have an account ? ') ),
+
+
+              SizedBox(height: 30,),
                Text("Continue with social media", style: TextStyle(color: Colors.grey),),
               SizedBox(height: 30,),
               Row(

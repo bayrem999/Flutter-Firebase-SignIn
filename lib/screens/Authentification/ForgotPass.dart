@@ -19,6 +19,11 @@ class _ForgotPassState extends State<ForgotPass> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shape: ContinuousRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular( 30.0),
+          ),
+        ),
         title: Text("Reset Password"),
       ),
       body:
