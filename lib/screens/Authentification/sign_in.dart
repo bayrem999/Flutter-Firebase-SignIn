@@ -200,35 +200,50 @@ class _SignInState extends State<SignIn> {
                         offset: Offset(0, 10)
                     )]
                 ),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
-                      ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            hintText: "Email or Phone number",
-                            hintStyle: TextStyle(color: Colors.grey),
-                            border: InputBorder.none
+
+                child: Form(
+                  key: _formkey,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
+                        ),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              hintText: "Email or Phone number",
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: InputBorder.none
+                          ),
+                          validator: (val) => val!.isEmpty ? 'enter an email ' : null,
+                          onChanged: (val) {
+                            setState(() => email = val);
+                          },
+
                         ),
                       ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
-                      ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            hintText: "Password",
-                            hintStyle: TextStyle(color: Colors.grey),
-                            border: InputBorder.none
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
+                        ),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              hintText: "Password",
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: InputBorder.none
+                          ),
+                          validator: (val) => val!.length < 6 ? 'password too short ' : null,
+                          obscureText: true,
+                          onChanged: (val) {
+                            setState(() => password = val);
+                          },
+
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 40,),
@@ -251,7 +266,23 @@ class _SignInState extends State<SignIn> {
                     color: Colors.orange[900]
                 ),
                 child: Center(
-                  child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                  child: GestureDetector(
+                      onTap: () async {
+                        if (_formkey.currentState?.validate() == true)
+                        {
+                          dynamic result = await _auth.signinWithEmailAndPassword(email, password);
+
+                          if(result == null)
+
+                          {
+                            setState(() => error = 'Wrong credentials ' );
+
+                          }
+
+                        }
+
+                      },
+                      child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
                 ),
               ),
 
