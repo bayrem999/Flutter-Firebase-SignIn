@@ -217,6 +217,7 @@ class _SignInState extends State<SignIn> {
                               border: InputBorder.none
                           ),
                           validator: (val) => val!.isEmpty ? 'enter an email ' : null,
+
                           onChanged: (val) {
                             setState(() => email = val);
                           },

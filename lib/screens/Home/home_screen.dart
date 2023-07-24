@@ -1,34 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sign_in/Services/auth.dart';
+import 'package:sign_in/screens/Home/AppState.dart';
+import 'package:sign_in/screens/Home/CustomDrawer.dart';
 
 
-class home extends StatelessWidget {
+class home extends StatefulWidget {
 
 
+  @override
+  State<home> createState() => _homeState();
+}
+
+class _homeState extends State<home> {
   final AuthService _auth= AuthService();
+
+
+
 
   @override
   Widget build(BuildContext context) {
+
+    var appState = Provider.of<AppState>(context);
+
     return Scaffold(
 
       backgroundColor: Colors.blueAccent[50],
       appBar: AppBar(
-        title: Text('Home Page'),
-        backgroundColor: Colors.blueAccent[400],
+        title: Text('Home Page',),
+        backgroundColor: Colors.grey,
         elevation: 0.0,
-        actions: <Widget>[
-          TextButton.icon(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            ),
-            icon: Icon(Icons.person),
-            label: Text('logout'),
-            onPressed: () async {
-              await _auth.signOut();
-            },
-          ),
-        ],
+
       ),
+      drawer: customDrawer(appState.selectedIndex),
 
       body: Container(
         decoration: BoxDecoration(
