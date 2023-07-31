@@ -57,6 +57,7 @@ class _customDrawerState extends State<customDrawer> {
           child: ListView(
             children:   [
           ListTile(
+            leading: Icon(Icons.home),
           title: Text('Home'),
             onTap: () {
               var appState = Provider.of<AppState>(context, listen: false);
@@ -68,6 +69,7 @@ class _customDrawerState extends State<customDrawer> {
             selectedTileColor: Colors.orange.shade100,
          ),
           ListTile(
+            leading: Icon(Icons.camera),
             title: Text('AR experience'),
             onTap: () {
               var appState = Provider.of<AppState>(context, listen: false);
@@ -79,6 +81,19 @@ class _customDrawerState extends State<customDrawer> {
             selectedTileColor: Colors.orange.shade100,
           ),
           // Add more items as needed
+
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+                onTap: () {
+                  var appState = Provider.of<AppState>(context, listen: false);
+                  appState.selectedIndex = 2;
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/setting'); // Navigate to the AR screen
+                },
+                selected: appState.selectedIndex == 2,
+                selectedTileColor: Colors.orange.shade100,
+              ),
 
               // Add more ListTile widgets as needed
               ListTile(
