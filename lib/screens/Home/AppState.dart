@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppState extends ChangeNotifier {
   int _selectedIndex = 0;
   bool _isDarkModeEnabled = false;
+  double _fontSize = 16.0;
 
 
   int get selectedIndex => _selectedIndex;
@@ -19,4 +20,10 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  double get fontSize => _fontSize;
+
+  set fontSize(double value) {
+    _fontSize = value;
+    notifyListeners();
+  }
 }

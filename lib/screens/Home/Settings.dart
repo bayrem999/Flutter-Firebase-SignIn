@@ -5,6 +5,8 @@ import 'AppState.dart';
 
 
 class SettingsPage extends StatefulWidget {
+
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -22,7 +24,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('Settings'),
+        title: Text('Settings' , style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
       ),
       body: SettingsList(
         sections: [
@@ -33,14 +35,19 @@ class _SettingsPageState extends State<SettingsPage> {
                initialValue:  Provider.of<AppState>(context).isDarkModeEnabled,
                 title: Text('Dark Mode'),
                 leading: Icon(Icons.dark_mode),
-
+               activeSwitchColor:  Colors.orange, // Customize the active color for dark mode
+               //switchActiveTrackColor: Colors.orange.shade200, // Customize the track color for dark mode
 
                 onToggle: (value) {
                   Provider.of<AppState>(context, listen: false).isDarkModeEnabled = value;
                 },
               ),
+              _buildFontSizeTile(context),
             ],
+
+
           ),
+
           SettingsSection(
             title: Text('Language',style: TextStyle(color: Colors.orange)),
             tiles: [
@@ -54,52 +61,63 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ],
           ),
+
         ],
       ),
     );
   }
-
-  List<Widget> _buildFontSizeTile() {
-    return [ SettingsTile(
-      title: Text('Text Size'),
+  SettingsTile _buildFontSizeTile(BuildContext context) {
+    return SettingsTile(
+      title: Text('Font Size'),
       leading: Icon(Icons.text_fields),
-      onPressed: (context) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Adjust Font Size'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Slider(
-                    value: _currentFontSize,
-                    min: 12.0,
-                    max: 36.0,
-                    divisions: 12,
-                    label: _currentFontSize.toStringAsFixed(1),
-                    onChanged: (value) {
-                      setState(() {
-                        _currentFontSize = value;
-                        // Implement font size change logic here
-                      });
-                    },
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-      trailing: Text(
-        '${_currentFontSize.toStringAsFixed(1)}',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),];
+      onPressed: _showFontSizeDialog,
+    );
   }
 
+  void _showFontSizeDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        double newFontSize = Provider.of<AppState>(context, listen: false).fontSize;
+
+        return AlertDialog(
+          title: Text('Choose Font Size'),
+          contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          content: SingleChildScrollView(
+            physics: ClampingScrollPhysics(), // Add this line to make the content scrollable
+            child: ListBody(
+              children: [
+                Slider(
+                  value: newFontSize,
+                  min: 10.0,
+                  max: 30.0,
+                  onChanged: (value) {
+                    Provider.of<AppState>(context, listen: false).fontSize = value;
+                    newFontSize = value;
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Save the new font size in preferences or wherever you want to persist it.
+                // Then close the dialog.
+                Navigator.pop(context);
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
   void _showLanguagePickerDialog() {
     showDialog(
       context: context,

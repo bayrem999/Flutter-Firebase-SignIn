@@ -47,7 +47,7 @@ class _customDrawerState extends State<customDrawer> {
             decoration: BoxDecoration(
               color: Colors.orange.shade700,
               gradient: LinearGradient(
-                colors: [Colors.orange.shade700, Colors.black],
+                colors: [Colors.black, Colors.black],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
