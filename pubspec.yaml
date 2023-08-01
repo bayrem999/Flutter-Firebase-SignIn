@@ -47,6 +47,9 @@ dependencies:
   lottie: ^2.5.0
   simple_animations: ^5.0.2
   settings_ui: ^2.0.2
+  flutter_tts: ^3.7.0
+  intl: ^0.18.0
+  flutter_localization: ^0.1.13
 
 
 

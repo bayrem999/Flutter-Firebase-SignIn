@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class AppState extends ChangeNotifier {
   int _selectedIndex = 0;
   bool _isDarkModeEnabled = false;
   double _fontSize = 16.0;
+  FlutterTts? _flutterTts;
+
+
+
 
 
   int get selectedIndex => _selectedIndex;

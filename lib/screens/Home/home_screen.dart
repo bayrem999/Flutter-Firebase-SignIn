@@ -27,7 +27,7 @@ class _homeState extends State<home> {
 
       backgroundColor: Colors.blueAccent[50],
       appBar: AppBar(
-        title: Text('Home Page',),
+        title: Text('Home Page', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
         backgroundColor: Colors.grey,
         elevation: 0.0,
 

@@ -1,0 +1,21 @@
+{
+"@@locale": "en",
+
+  "language": "language",
+  "selectLanguage": "selectLanguage",
+  "english": "English",
+  "french": "French",
+
+  "hello": "hello",
+  "greeting": "greeting",
+
+  "home":"home",
+  "arExperience":"AR experience",
+  "settings":"Settings",
+  "logout":"Logout",
+  "homePage":" Home Page ",
+  "appearance":"Appearance",
+  "fontSize":"TFot Size",
+  "language":"Language",
+  "darkMode":"Dark Mode"
+}

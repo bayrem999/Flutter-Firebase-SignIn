@@ -40,7 +40,7 @@ class _customDrawerState extends State<customDrawer> {
         children: [
           UserAccountsDrawerHeader(
             accountName: Text("_auth.user."),
-            accountEmail: Text('Email: ${user?.email ?? "N/A"}'),
+            accountEmail: Text('Email: ${user?.email ?? "N/A"}', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
             currentAccountPicture: CircleAvatar(
               child: Icon(Icons.person),
             ),
@@ -58,7 +58,7 @@ class _customDrawerState extends State<customDrawer> {
             children:   [
           ListTile(
             leading: Icon(Icons.home),
-          title: Text('Home'),
+          title: Text('Home', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
             onTap: () {
               var appState = Provider.of<AppState>(context, listen: false);
               appState.selectedIndex = 0;
@@ -70,7 +70,7 @@ class _customDrawerState extends State<customDrawer> {
          ),
           ListTile(
             leading: Icon(Icons.camera),
-            title: Text('AR experience'),
+            title: Text('AR experience', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
             onTap: () {
               var appState = Provider.of<AppState>(context, listen: false);
               appState.selectedIndex = 1;
@@ -84,7 +84,7 @@ class _customDrawerState extends State<customDrawer> {
 
               ListTile(
                 leading: Icon(Icons.settings),
-                title: Text('Settings'),
+                title: Text('Settings', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
                 onTap: () {
                   var appState = Provider.of<AppState>(context, listen: false);
                   appState.selectedIndex = 2;
@@ -98,7 +98,7 @@ class _customDrawerState extends State<customDrawer> {
               // Add more ListTile widgets as needed
               ListTile(
                 leading: Icon(Icons.logout),
-                title: Text('Logout'),
+                title: Text('Logout', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
                 onTap: () async {
                   await _auth.signOut();
 

@@ -1,0 +1,22 @@
+{
+"@@locale": "fr",
+
+  "language": "Langue",
+  "selectLanguage": "Choisir la langue",
+  "english": "Anglais",
+  "french": "Français",
+
+  "hello": "Bonjour",
+  "greeting": "Bienvenue dans mon application !",
+
+  "home":"home",
+  "arExperience":"Experience RA",
+  "settings":"Parametres",
+  "logout":"Deconnecter",
+  "homePage":" Page d'acceuil ",
+  "appearance":"apparance",
+  "fontSize":"Tille de police",
+  "language":"langue",
+  "darkMode":" Mode Nuit"
+
+}
