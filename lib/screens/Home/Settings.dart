@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'AppState.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 
 class SettingsPage extends StatefulWidget {
@@ -25,7 +27,9 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('Settings' , style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+        title: Text(
+
+          AppLocalizations.of(context)!.settings, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
       ),
       body: SettingsList(
         sections: [
