@@ -5,15 +5,16 @@ import 'AppState.dart';
 
 
 class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
+
 
 
   @override
+  // ignore: library_private_types_in_public_api
   _SettingsPageState createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  double _currentFontSize = 16.0;
-  bool _isDarkModeEnabled = false;
   String _selectedLanguage = 'English';
 
 
@@ -29,12 +30,12 @@ class _SettingsPageState extends State<SettingsPage> {
       body: SettingsList(
         sections: [
           SettingsSection(
-            title: Text('Appearance',style: TextStyle(color: Colors.orange)),
+            title: const Text('Appearance',style: TextStyle(color: Colors.orange)),
             tiles: [
              SettingsTile.switchTile(
                initialValue:  Provider.of<AppState>(context).isDarkModeEnabled,
-                title: Text('Dark Mode'),
-                leading: Icon(Icons.dark_mode),
+                title: const Text('Dark Mode'),
+                leading: const Icon(Icons.dark_mode),
                activeSwitchColor:  Colors.orange, // Customize the active color for dark mode
                //switchActiveTrackColor: Colors.orange.shade200, // Customize the track color for dark mode
 
@@ -49,11 +50,11 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
 
           SettingsSection(
-            title: Text('Language',style: TextStyle(color: Colors.orange)),
+            title: const Text('Language',style: TextStyle(color: Colors.orange)),
             tiles: [
               SettingsTile(
-                title: Text('Language'),
-                leading: Icon(Icons.language),
+                title: const Text('Language'),
+                leading: const Icon(Icons.language),
                 description: Text(_selectedLanguage),
                 onPressed: (context) {
                   _showLanguagePickerDialog();
@@ -68,8 +69,8 @@ class _SettingsPageState extends State<SettingsPage> {
   }
   SettingsTile _buildFontSizeTile(BuildContext context) {
     return SettingsTile(
-      title: Text('Font Size'),
-      leading: Icon(Icons.text_fields),
+      title: const Text('Font Size'),
+      leading: const Icon(Icons.text_fields),
       onPressed: _showFontSizeDialog,
     );
   }
@@ -81,11 +82,11 @@ class _SettingsPageState extends State<SettingsPage> {
         double newFontSize = Provider.of<AppState>(context, listen: false).fontSize;
 
         return AlertDialog(
-          title: Text('Choose Font Size'),
-          contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          title: const Text('Choose Font Size'),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           content: SingleChildScrollView(
-            physics: ClampingScrollPhysics(), // Add this line to make the content scrollable
+            physics: const ClampingScrollPhysics(), // Add this line to make the content scrollable
             child: ListBody(
               children: [
                 Slider(
@@ -103,7 +104,7 @@ class _SettingsPageState extends State<SettingsPage> {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -111,7 +112,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 // Then close the dialog.
                 Navigator.pop(context);
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );
@@ -123,7 +124,7 @@ class _SettingsPageState extends State<SettingsPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Select Language'),
+          title: const Text('Select Language'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

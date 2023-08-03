@@ -1,17 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_in/screens/Home/AR.dart';
 import 'package:sign_in/Services/auth.dart';
-import 'package:sign_in/screens/Authentification/ForgotPass.dart';
 import 'package:sign_in/screens/Home/AppState.dart';
-import 'package:sign_in/screens/Home/home_screen.dart';
 
 
+// ignore: camel_case_types
 class customDrawer extends StatefulWidget {
-  late final int selectedIndex;
+   final int selectedIndex;
 
-  customDrawer(this.selectedIndex);
+  const customDrawer(this.selectedIndex, {super.key});
 
 
 
@@ -20,6 +18,7 @@ class customDrawer extends StatefulWidget {
 
 }
 
+// ignore: camel_case_types
 class _customDrawerState extends State<customDrawer> {
   final AuthService _auth= AuthService();
 
@@ -39,14 +38,14 @@ class _customDrawerState extends State<customDrawer> {
       child: Column(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text("_auth.user."),
+            accountName: const Text("_auth.user."),
             accountEmail: Text('Email: ${user?.email ?? "N/A"}', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
-            currentAccountPicture: CircleAvatar(
+            currentAccountPicture: const CircleAvatar(
               child: Icon(Icons.person),
             ),
             decoration: BoxDecoration(
               color: Colors.orange.shade700,
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 colors: [Colors.black, Colors.black],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -57,7 +56,7 @@ class _customDrawerState extends State<customDrawer> {
           child: ListView(
             children:   [
           ListTile(
-            leading: Icon(Icons.home),
+            leading: const Icon(Icons.home),
           title: Text('Home', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
             onTap: () {
               var appState = Provider.of<AppState>(context, listen: false);
@@ -69,7 +68,7 @@ class _customDrawerState extends State<customDrawer> {
             selectedTileColor: Colors.orange.shade100,
          ),
           ListTile(
-            leading: Icon(Icons.camera),
+            leading: const Icon(Icons.camera),
             title: Text('AR experience', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
             onTap: () {
               var appState = Provider.of<AppState>(context, listen: false);
@@ -83,7 +82,7 @@ class _customDrawerState extends State<customDrawer> {
           // Add more items as needed
 
               ListTile(
-                leading: Icon(Icons.settings),
+                leading: const Icon(Icons.settings),
                 title: Text('Settings', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
                 onTap: () {
                   var appState = Provider.of<AppState>(context, listen: false);
@@ -97,7 +96,7 @@ class _customDrawerState extends State<customDrawer> {
 
               // Add more ListTile widgets as needed
               ListTile(
-                leading: Icon(Icons.logout),
+                leading: const Icon(Icons.logout),
                 title: Text('Logout', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
                 onTap: () async {
                   await _auth.signOut();

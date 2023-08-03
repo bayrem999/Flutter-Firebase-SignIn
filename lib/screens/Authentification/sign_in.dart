@@ -5,7 +5,7 @@ import 'package:sign_in/screens/Authentification/ForgotPass.dart';
 
 class SignIn extends StatefulWidget {
   final Function  toggleView;
-  SignIn({required this.toggleView});
+  const SignIn({super.key, required this.toggleView});
 
 
   @override
@@ -145,7 +145,7 @@ class _SignInState extends State<SignIn> {
 
         body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
         gradient: LinearGradient(
         begin: Alignment.topCenter,
             colors: [
@@ -157,7 +157,7 @@ class _SignInState extends State<SignIn> {
     child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
-    SizedBox(height: 80,),
+    const SizedBox(height: 80,),
     const Padding(
     padding: EdgeInsets.all(20),
 
@@ -175,10 +175,10 @@ class _SignInState extends State<SignIn> {
 
 
     ),
-    SizedBox(height: 20),
+    const SizedBox(height: 20),
     Expanded(
     child: Container(
-    decoration: BoxDecoration(
+    decoration: const BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.only(topLeft: Radius.circular(60), topRight: Radius.circular(60))
     ),
@@ -186,15 +186,15 @@ class _SignInState extends State<SignIn> {
 
       child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(30),
+          padding: const EdgeInsets.all(30),
           child: Column(
             children: <Widget>[
-              SizedBox(height: 60,),
+              const SizedBox(height: 60,),
                Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: [BoxShadow(
+                    boxShadow:const [ BoxShadow(
                         color: Color.fromRGBO(225, 95, 27, .3),
                         blurRadius: 20,
                         offset: Offset(0, 10)
@@ -206,12 +206,12 @@ class _SignInState extends State<SignIn> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
                             border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
                         ),
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               hintText: "Email or Phone number",
                               hintStyle: TextStyle(color: Colors.grey),
                               border: InputBorder.none
@@ -225,12 +225,12 @@ class _SignInState extends State<SignIn> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
                             border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
                         ),
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               hintText: "Password",
                               hintStyle: TextStyle(color: Colors.grey),
                               border: InputBorder.none
@@ -247,21 +247,21 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
               ),
-              SizedBox(height: 40,),
+              const SizedBox(height: 40,),
               GestureDetector(
                   onTap: (){
                     Navigator.push(context,
                       MaterialPageRoute(builder: (context)
                       {
-                        return ForgotPass();
+                        return const ForgotPass();
                       }),);
 
                   },
-                  child: Text(" Forgot password ? " , style:TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,) ,)),
-              SizedBox(height: 40,),
+                  child: const Text(" Forgot password ? " , style:TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,) ,)),
+              const SizedBox(height: 40,),
                Container(
                 height: 50,
-                margin: EdgeInsets.symmetric(horizontal: 50),
+                margin: const EdgeInsets.symmetric(horizontal: 50),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
                     color: Colors.orange[900]
@@ -283,19 +283,19 @@ class _SignInState extends State<SignIn> {
                         }
 
                       },
-                      child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
+                      child: const Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
                 ),
               ),
 
               TextButton(onPressed: ()  {
                 widget.toggleView();
 
-              },  child: Text('you dont have an account ? ') ),
+              },  child: const Text('you dont have an account ? ') ),
 
 
-              SizedBox(height: 30,),
-               Text("Continue with social media", style: TextStyle(color: Colors.grey),),
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
+               const Text("Continue with social media", style: TextStyle(color: Colors.grey),),
+              const SizedBox(height: 30,),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -305,20 +305,20 @@ class _SignInState extends State<SignIn> {
                           borderRadius: BorderRadius.circular(50),
                           color: Colors.blue
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text("Facebook", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                       ),
                     ),
                   ),
-                  SizedBox(width: 30,),
+                  const SizedBox(width: 30,),
                   Expanded(
                     child:  Container(
                       height: 50,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
-                          color: Color(0xFFE53935)
+                          color: const Color(0xFFE53935)
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text("Google", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                       ),
                     ),

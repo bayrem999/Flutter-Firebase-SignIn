@@ -1,4 +1,5 @@
 {
+
 "@@locale": "en",
 
   "language": "language",
@@ -18,4 +19,5 @@
   "fontSize":"TFot Size",
   "language":"Language",
   "darkMode":"Dark Mode"
+
 }

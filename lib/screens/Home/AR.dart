@@ -11,7 +11,7 @@ class AR extends StatelessWidget {
     return  Scaffold(
 
       appBar: AppBar(),
-      body: Center(child: Text("hi oihdfojd,")),
+      body: const Center(child: Text("hi oihdfojd,")),
       drawer: customDrawer(appState.selectedIndex),
     );
   }

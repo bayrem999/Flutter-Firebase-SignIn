@@ -1,5 +1,7 @@
+// ignore_for_file: non_constant_identifier_names, avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:sign_in/Models/User.dart';
 
 class AuthService {
@@ -78,6 +80,7 @@ Users? _userFromFireBaseUser(User? user) {
       User? user = result.user;
       return _userFromFireBaseUser(user);
     }
+    // ignore: avoid_print
     catch(e){print (e.toString());
       return null ;
     }

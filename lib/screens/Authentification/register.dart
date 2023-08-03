@@ -5,7 +5,7 @@ class Register extends StatefulWidget {
 
 
   final Function  toggleView;
-  Register({required this.toggleView});
+  const Register({super.key, required this.toggleView});
 
   @override
   State<Register> createState() => _RegisterState();
@@ -112,7 +112,7 @@ class _RegisterState extends State<Register> {
 
         body: Container(
           width: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   colors: [
@@ -124,7 +124,7 @@ class _RegisterState extends State<Register> {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SizedBox(height: 80,),
+                const SizedBox(height: 80,),
                 const Padding(
                   padding: EdgeInsets.all(20),
 
@@ -142,10 +142,10 @@ class _RegisterState extends State<Register> {
 
 
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Expanded(
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(60), topRight: Radius.circular(60))
                     ),
@@ -153,15 +153,15 @@ class _RegisterState extends State<Register> {
 
                     child: SingleChildScrollView(
                       child: Padding(
-                        padding: EdgeInsets.all(30),
+                        padding: const EdgeInsets.all(30),
                         child: Column(
                           children: <Widget>[
-                            SizedBox(height: 60,),
+                            const SizedBox(height: 60,),
                             Container(
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [BoxShadow(
+                                  boxShadow: const[ BoxShadow(
                                       color: Color.fromRGBO(225, 95, 27, .3),
                                       blurRadius: 20,
                                       offset: Offset(0, 10)
@@ -172,12 +172,12 @@ class _RegisterState extends State<Register> {
                                 child: Column(
                                   children: <Widget>[
                                     Container(
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: const BoxDecoration(
                                           border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
                                       ),
                                       child: TextFormField(
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                             hintText: "Email or Phone number",
                                             hintStyle: TextStyle(color: Colors.grey),
                                             border: InputBorder.none
@@ -190,12 +190,12 @@ class _RegisterState extends State<Register> {
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: const BoxDecoration(
                                           border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
                                       ),
                                       child: TextFormField(
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                             hintText: "Password",
                                             hintStyle: TextStyle(color: Colors.grey),
                                             border: InputBorder.none
@@ -213,10 +213,10 @@ class _RegisterState extends State<Register> {
                               ),
                             ),
 
-                            SizedBox(height: 40,),
+                            const SizedBox(height: 40,),
                             Container(
                               height: 50,
-                              margin: EdgeInsets.symmetric(horizontal: 50),
+                              margin: const EdgeInsets.symmetric(horizontal: 50),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
                                   color: Colors.orange[900]
@@ -237,17 +237,17 @@ class _RegisterState extends State<Register> {
                                     }
                                   },
 
-                                    child: Text("Sign up", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
+                                    child: const Text("Sign up", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
                               ),
                             ),
 
                             TextButton(onPressed: ()  {
                               widget.toggleView();
 
-                            },  child: Text('you already  have an account ? ') ),
+                            },  child: const Text('you already  have an account ? ') ),
 
 
-                            SizedBox(height: 30,),
+                            const SizedBox(height: 30,),
 
 
                           ],
