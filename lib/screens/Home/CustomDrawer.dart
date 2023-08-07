@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in/Services/auth.dart';
 import 'package:sign_in/screens/Home/AppState.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 
 // ignore: camel_case_types
@@ -57,7 +59,7 @@ class _customDrawerState extends State<customDrawer> {
             children:   [
           ListTile(
             leading: const Icon(Icons.home),
-          title: Text('Home', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+          title: Text( AppLocalizations.of(context)!.home , style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
             onTap: () {
               var appState = Provider.of<AppState>(context, listen: false);
               appState.selectedIndex = 0;
@@ -69,7 +71,7 @@ class _customDrawerState extends State<customDrawer> {
          ),
           ListTile(
             leading: const Icon(Icons.camera),
-            title: Text('AR experience', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+            title: Text(AppLocalizations.of(context)!.arExperience, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
             onTap: () {
               var appState = Provider.of<AppState>(context, listen: false);
               appState.selectedIndex = 1;
@@ -83,7 +85,7 @@ class _customDrawerState extends State<customDrawer> {
 
               ListTile(
                 leading: const Icon(Icons.settings),
-                title: Text('Settings', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+                title: Text(AppLocalizations.of(context)!.settings, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
                 onTap: () {
                   var appState = Provider.of<AppState>(context, listen: false);
                   appState.selectedIndex = 2;
@@ -97,7 +99,7 @@ class _customDrawerState extends State<customDrawer> {
               // Add more ListTile widgets as needed
               ListTile(
                 leading: const Icon(Icons.logout),
-                title: Text('Logout', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+                title: Text(AppLocalizations.of(context)!.logout, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
                 onTap: () async {
                   await _auth.signOut();
 

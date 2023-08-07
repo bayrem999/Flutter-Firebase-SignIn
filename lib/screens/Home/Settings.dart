@@ -31,49 +31,61 @@ class _SettingsPageState extends State<SettingsPage> {
 
           AppLocalizations.of(context)!.settings, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
       ),
-      body: SettingsList(
-        sections: [
-          SettingsSection(
-            title: const Text('Appearance',style: TextStyle(color: Colors.orange)),
-            tiles: [
-             SettingsTile.switchTile(
-               initialValue:  Provider.of<AppState>(context).isDarkModeEnabled,
-                title: const Text('Dark Mode'),
-                leading: const Icon(Icons.dark_mode),
-               activeSwitchColor:  Colors.orange, // Customize the active color for dark mode
-               //switchActiveTrackColor: Colors.orange.shade200, // Customize the track color for dark mode
-
-                onToggle: (value) {
-                  Provider.of<AppState>(context, listen: false).isDarkModeEnabled = value;
-                },
+      body: Semantics(
+        label:  AppLocalizations.of(context)!.settings,
+        child: SettingsList(
+          sections: [
+            SettingsSection(
+              title: Semantics(
+                label:  AppLocalizations.of(context)!.appearance,
+                child: Text(
+                  AppLocalizations.of(context)!.appearance,
+                  style: const TextStyle(color: Colors.orange),
+                ),
               ),
-              _buildFontSizeTile(context),
-            ],
-
-
-          ),
-
-          SettingsSection(
-            title: const Text('Language',style: TextStyle(color: Colors.orange)),
-            tiles: [
-              SettingsTile(
-                title: const Text('Language'),
-                leading: const Icon(Icons.language),
-                description: Text(_selectedLanguage),
-                onPressed: (context) {
-                  _showLanguagePickerDialog();
-                },
+              tiles: [
+                SettingsTile.switchTile(
+                  initialValue: Provider.of<AppState>(context).isDarkModeEnabled,
+                  title: Semantics(
+                    label: AppLocalizations.of(context)!.darkMode,
+                    child: Text(AppLocalizations.of(context)!.darkMode),
+                  ),
+                  leading: const Icon(Icons.dark_mode),
+                  activeSwitchColor: Colors.orange,
+                  onToggle: (value) {
+                    Provider.of<AppState>(context, listen: false).isDarkModeEnabled = value;
+                  },
+                ),
+                _buildFontSizeTile(context),
+              ],
+            ),
+            SettingsSection(
+              title: Semantics(
+                label:  AppLocalizations.of(context)!.language,
+                child: const Text('Language', style: TextStyle(color: Colors.orange)),
               ),
-            ],
-          ),
-
-        ],
+              tiles: [
+                SettingsTile(
+                  title: const Text('Language'),
+                  leading: const Icon(Icons.language),
+                  description: Semantics(
+                    label: _selectedLanguage,
+                    child: Text(_selectedLanguage),
+                  ),
+                  onPressed: (context) {
+                    _showLanguagePickerDialog();
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
   SettingsTile _buildFontSizeTile(BuildContext context) {
     return SettingsTile(
-      title: const Text('Font Size'),
+      title:  Text(AppLocalizations.of(context)!.fontSize),
       leading: const Icon(Icons.text_fields),
       onPressed: _showFontSizeDialog,
     );
@@ -85,40 +97,52 @@ class _SettingsPageState extends State<SettingsPage> {
       builder: (context) {
         double newFontSize = Provider.of<AppState>(context, listen: false).fontSize;
 
-        return AlertDialog(
-          title: const Text('Choose Font Size'),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          content: SingleChildScrollView(
-            physics: const ClampingScrollPhysics(), // Add this line to make the content scrollable
-            child: ListBody(
-              children: [
-                Slider(
-                  value: newFontSize,
-                  min: 10.0,
-                  max: 30.0,
-                  onChanged: (value) {
-                    Provider.of<AppState>(context, listen: false).fontSize = value;
-                    newFontSize = value;
-                  },
+        return Semantics(
+          label: 'Choose Font Size Dialog',
+          child: AlertDialog(
+            title: const Text('Choose Font Size'),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            content: SingleChildScrollView(
+              physics: const ClampingScrollPhysics(), // Add this line to make the content scrollable
+              child: ListBody(
+                children: [
+                  Semantics(
+                    label: 'Font Size Slider , slide to change size',
+                    child: Slider(
+                      value: newFontSize,
+                      min: 10.0,
+                      max: 30.0,
+                      onChanged: (value) {
+                        Provider.of<AppState>(context, listen: false).fontSize = value;
+                        newFontSize = value;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              Semantics(
+                label : 'Cancel button',
+                child: TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancel'),
                 ),
-              ],
-            ),
+              ),
+              Semantics(
+                label : 'Save button',
+                child: TextButton(
+                  onPressed: () {
+                    // Save the new font size in preferences or wherever you want to persist it.
+                    // Then close the dialog.
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Save'),
+                ),
+              ),
+            ],
           ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Save the new font size in preferences or wherever you want to persist it.
-                // Then close the dialog.
-                Navigator.pop(context);
-              },
-              child: const Text('Save'),
-            ),
-          ],
         );
       },
     );

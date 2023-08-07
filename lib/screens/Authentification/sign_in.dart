@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sign_in/Services/auth.dart';
 import 'package:sign_in/screens/Authentification/ForgotPass.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignIn extends StatefulWidget {
   final Function  toggleView;
