@@ -28,9 +28,12 @@ class _homeState extends State<home> {
   final AuthService _auth= AuthService();
   final NoteService _note = NoteService();
 
+  List<Note> notes = [];
 
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+
   late String _title;
   late String _content;
   final NoteService _noteS = NoteService();
@@ -65,11 +68,12 @@ class _homeState extends State<home> {
           } else if (snapshot.hasData) {
             List<Note> notes = snapshot.data!;
 
-            return ListView.builder(
-              itemCount: notes.length,
-              itemBuilder: (context, index) {
+            return AnimatedList(
+              key: _listKey,
+              initialItemCount: notes.length,
+              itemBuilder: (context, index, animation) {
                 Note note = notes[index];
-                return NoteCard(title: note.title, content: note.content);
+                return _buildAnimatedNoteItem(note, animation);
               },
             );
           } else {
@@ -87,6 +91,15 @@ class _homeState extends State<home> {
 
     );
   }
+
+  Widget _buildAnimatedNoteItem(Note note, Animation<double> animation) {
+    return SizeTransition(
+      sizeFactor: animation,
+      child: NoteCard(title: note.title, content: note.content),
+    );
+  }
+
+
 
   void _showAddNoteDialog() {
     showDialog(
@@ -135,8 +148,13 @@ class _homeState extends State<home> {
             ),
             TextButton(
               onPressed: () {
-                _addNote(userId!);
-                Navigator.pop(context);
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  _addNote(userId!);
+                  Navigator.pop(context);
+
+
+                }
               },
               child: Text('Add'),
             ),
@@ -146,7 +164,7 @@ class _homeState extends State<home> {
     );
   }
 
-  void _addNote(String userId) {
+  void _addNote(String userId) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       // Generate a unique ID for the note
@@ -161,7 +179,13 @@ class _homeState extends State<home> {
       );
 
       // Save the note to Firebase using the NoteS class
-      _noteS.addNote(userId, newNote);
+      await _noteS.addNote(userId, newNote);
+
+      List<Note> updatedNotes = await _note.getNotesForCurrentUser();
+
+      setState(() {
+        notes = updatedNotes;
+      });
     }
   }
 

@@ -23,6 +23,10 @@ class NoteService {
       'content': note.content,
       'timestamp': note.timestamp,
     });
+
+
+
+
   }
 
   String? getCurrentUserId() {

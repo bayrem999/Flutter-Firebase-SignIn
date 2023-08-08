@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../Home/AppState.dart';
 
 class NoteCard extends StatelessWidget {
   final String title;
@@ -16,8 +19,8 @@ class NoteCard extends StatelessWidget {
         ),
         elevation: 4.0,
         child: ListTile(
-          title: Text(title),
-          subtitle: Text(content),
+          title: Text(title, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+          subtitle: Text(content, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
           onTap: () {
             // Handle tapping on the note card
           },
