@@ -56,7 +56,7 @@ class _homeState extends State<home> {
       drawer: customDrawer(appState.selectedIndex),
 
       body: FutureBuilder<List<Note>>(
-        future: _note.getNotesForCurrentUser( userId),
+        future: _note.getNotesForCurrentUser(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());

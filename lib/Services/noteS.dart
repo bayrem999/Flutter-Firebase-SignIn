@@ -8,6 +8,7 @@ class NoteService {
   final String _collectionPath = 'notes'; // Replace with your collection path
   User? user = FirebaseAuth.instance.currentUser;
   final AuthService _auth= AuthService();
+  String? userId ;
 
 
 
@@ -24,16 +25,18 @@ class NoteService {
     });
   }
 
-  String getCurrentUserId() {
+  String? getCurrentUserId() {
+userId = user?.uid;
 
     if (user != null) {
-      return user.uid;
+      return userId;
     }
     return null;
   }
 
   // Get all notes for a specific user
   Future<List<Note>> getNotesForCurrentUser() async {
+    String? userId = getCurrentUserId();
 
     if (userId == null) {
       return []; // Return an empty list if the user is not logged in
@@ -47,16 +50,18 @@ class NoteService {
           .get();
 
       List<Note> notes = [];
-      snapshot.docs.forEach((doc) {
-        // Create Note objects from the snapshot data
-        notes.add(Note(
-          id: doc.id,
-          title: doc.data()['title'],
-          content: doc.data()['content'],
-          timestamp: doc.data()['timestamp'],
-        ));
-      });
 
+      snapshot.docs.forEach((document) {
+        Map<String, dynamic> noteData = document.data()!;
+        notes.add(
+          Note(
+            id: document.id,
+            title: noteData['title'],
+            content: noteData['content'],
+            timestamp: (noteData['timestamp'] as Timestamp).toDate(), // Convert Timestamp to DateTime
+          ),
+        );
+      });
       return notes;
     } catch (e) {
       print('Error fetching notes: $e');
