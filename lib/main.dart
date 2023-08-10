@@ -8,6 +8,7 @@ import 'package:sign_in/screens/Home/AR.dart';
 import 'package:sign_in/screens/Home/AppState.dart';
 import 'package:sign_in/screens/Home/Settings.dart';
 import 'package:sign_in/screens/Home/home_screen.dart';
+import 'package:sign_in/screens/Home/notes.dart';
 import 'package:sign_in/screens/splach_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:sign_in/Theme/theme.dart';
 import 'package:sign_in/screens/Home/Settings.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:sign_in/Models/Planets.dart';
 
 
 
@@ -80,8 +82,9 @@ class MyApp extends StatelessWidget {
 
             routes: {
               '/home': (context) => const home(),
-              '/ar': (context) =>  AR(),
+              '/ar': (context) =>  AR( planet: null,),
               '/setting': (context) => const SettingsPage(),
+              '/notes' : (context)=> notes(),
             },
             home: const splach(),
           );

@@ -25,6 +25,18 @@
   "youdonthaveanAccount": "tu n'as pas de compte ?",
   "continuewithsocialmedia": "connecter avec reseaux sociaux",
   "signUp": "sign up",
-  "youalreadyhaveanAccount": "tu as deja un compte ? "
+  "youalreadyhaveanAccount": "tu as deja un compte ? ",
+  "notes": "Notes",
+  "titlebox": "espace de titre",
+  "contentbox": "espace de cotenu",
+  "title":"Titre",
+  "content": "Contenue",
+  "add": "Ajouter",
+  "addbutton": "bouton ajout",
+  "cancelbutton": "bouton Ignorer",
+  "cancel": "Ignorer",
+  "addnote": "Ajouter  note"
+
+
 
 }

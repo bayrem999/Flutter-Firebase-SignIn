@@ -25,6 +25,16 @@
   "youdonthaveanAccount": "You don't have an Account ?",
   "continuewithsocialmedia": "Continue with Socila media",
   "signUp": "sign up",
-  "youalreadyhaveanAccount": "You already have an account ? "
+  "youalreadyhaveanAccount": "You already have an account ? ",
+  "notes": "Notes",
+  "titlebox": "title box",
+  "contentbox": "content box",
+  "title":"Title",
+  "content": "Content",
+  "add": "Add",
+  "cancel": "Cancel",
+  "addbutton": "Add button",
+  "cancelbutton": "Cancel button",
+  "addnote": "Add note"
 
 }

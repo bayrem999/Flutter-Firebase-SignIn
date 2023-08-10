@@ -12,12 +12,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uuid/uuid.dart';
 
 
+import '../../Models/Planets.dart';
 import '../Notes/NoteCard.dart';
 
 
 class home extends StatefulWidget {
-  const home({super.key});
 
+
+  const home({super.key});
 
 
   @override
@@ -26,19 +28,7 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   final AuthService _auth= AuthService();
-  final NoteService _note = NoteService();
-
-  List<Note> notes = [];
-
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-
-  late String _title;
-  late String _content;
-  final NoteService _noteS = NoteService();
   String? userId;
-
   @override
   Widget build(BuildContext context) {
 
@@ -58,136 +48,12 @@ class _homeState extends State<home> {
       ),
       drawer: customDrawer(appState.selectedIndex),
 
-      body: FutureBuilder<List<Note>>(
-        future: _note.getNotesForCurrentUser(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error fetching notes'));
-          } else if (snapshot.hasData) {
-            List<Note> notes = snapshot.data!;
-
-            return AnimatedList(
-              key: _listKey,
-              initialItemCount: notes.length,
-              itemBuilder: (context, index, animation) {
-                Note note = notes[index];
-                return _buildAnimatedNoteItem(note, animation);
-              },
-            );
-          } else {
-            return Center(child: Text('No notes found'));
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showAddNoteDialog();
-        },
-        child: Icon(Icons.add),
-      ),
 
 
     );
   }
 
-  Widget _buildAnimatedNoteItem(Note note, Animation<double> animation) {
-    return SizeTransition(
-      sizeFactor: animation,
-      child: NoteCard(title: note.title, content: note.content),
-    );
-  }
 
-
-
-  void _showAddNoteDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Add Note'),
-          content: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Title'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a title';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _title = value!;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Content'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter content';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _content = value!;
-                  },
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  _addNote(userId!);
-                  Navigator.pop(context);
-
-
-                }
-              },
-              child: Text('Add'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _addNote(String userId) async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      // Generate a unique ID for the note
-      String noteId = Uuid().v4();
-
-      // Create a new Note object
-      Note newNote = Note(
-        id: noteId,
-        title: _title,
-        content: _content,
-        timestamp: DateTime.now(),
-      );
-
-      // Save the note to Firebase using the NoteS class
-      await _noteS.addNote(userId, newNote);
-
-      List<Note> updatedNotes = await _note.getNotesForCurrentUser();
-
-      setState(() {
-        notes = updatedNotes;
-      });
-    }
-  }
 
 
   }

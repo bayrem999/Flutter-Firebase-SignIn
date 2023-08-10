@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:sign_in/Services/auth.dart';
 import 'package:sign_in/screens/Home/AppState.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sign_in/screens/Home/AR.dart';
+import 'package:sign_in/Models/Planets.dart';
 
 
 
@@ -87,6 +89,21 @@ class _customDrawerState extends State<customDrawer> {
               selectedTileColor: Colors.orange.shade100,
             ),
           ),
+              Semantics(
+                label:  AppLocalizations.of(context)!.notes,
+                child: ListTile(
+                  leading: const Icon(Icons.note_alt_sharp),
+                  title: Text( AppLocalizations.of(context)!.notes , style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+                  onTap: () {
+                    var appState = Provider.of<AppState>(context, listen: false);
+                    appState.selectedIndex = 2;
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/notes');
+                  },
+                  selected: appState.selectedIndex == 2,
+                  selectedTileColor: Colors.orange.shade100,
+                ),
+              ),
           // Add more items as needed
 
               Semantics(
@@ -96,11 +113,11 @@ class _customDrawerState extends State<customDrawer> {
                   title: Text(AppLocalizations.of(context)!.settings, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
                   onTap: () {
                     var appState = Provider.of<AppState>(context, listen: false);
-                    appState.selectedIndex = 2;
+                    appState.selectedIndex = 3;
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/setting'); // Navigate to the AR screen
                   },
-                  selected: appState.selectedIndex == 2,
+                  selected: appState.selectedIndex == 3,
                   selectedTileColor: Colors.orange.shade100,
                 ),
               ),
