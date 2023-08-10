@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sign_in/Services/auth.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Register extends StatefulWidget {
 
@@ -177,9 +178,9 @@ class _RegisterState extends State<Register> {
                                           border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
                                       ),
                                       child: TextFormField(
-                                        decoration: const InputDecoration(
-                                            hintText: "Email or Phone number",
-                                            hintStyle: TextStyle(color: Colors.grey),
+                                        decoration:  InputDecoration(
+                                            hintText: AppLocalizations.of(context)!.email,
+                                            hintStyle: const TextStyle(color: Colors.grey),
                                             border: InputBorder.none
                                         ),
                                         validator: (val) => val!.isEmpty ? 'enter an email ' : null,
@@ -195,9 +196,9 @@ class _RegisterState extends State<Register> {
                                           border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
                                       ),
                                       child: TextFormField(
-                                        decoration: const InputDecoration(
-                                            hintText: "Password",
-                                            hintStyle: TextStyle(color: Colors.grey),
+                                        decoration:  InputDecoration(
+                                            hintText: AppLocalizations.of(context)!.password,
+                                            hintStyle:const TextStyle(color: Colors.grey),
                                             border: InputBorder.none
                                         ),
                                         validator: (val) => val!.length < 6 ? 'password too short ' : null,
@@ -237,14 +238,14 @@ class _RegisterState extends State<Register> {
                                     }
                                   },
 
-                                    child: const Text("Sign up", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
+                                    child:  Text(AppLocalizations.of(context)!.signUp, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
                               ),
                             ),
 
                             TextButton(onPressed: ()  {
                               widget.toggleView();
 
-                            },  child: const Text('you already  have an account ? ') ),
+                            },  child:  Text(AppLocalizations.of(context)!.youalreadyhaveanAccount,) ),
 
 
                             const SizedBox(height: 30,),

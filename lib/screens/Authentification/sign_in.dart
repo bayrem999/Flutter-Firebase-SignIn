@@ -210,18 +210,21 @@ class _SignInState extends State<SignIn> {
                         decoration: const BoxDecoration(
                             border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
                         ),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              hintText: "Email or Phone number",
-                              hintStyle: TextStyle(color: Colors.grey),
-                              border: InputBorder.none
+                        child: Semantics(
+                          label:  AppLocalizations.of(context)!.email,
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                                hintText: "Email",
+                                hintStyle: TextStyle(color: Colors.grey),
+                                border: InputBorder.none
+                            ),
+                            validator: (val) => val!.isEmpty ? 'enter an email ' : null,
+
+                            onChanged: (val) {
+                              setState(() => email = val);
+                            },
+
                           ),
-                          validator: (val) => val!.isEmpty ? 'enter an email ' : null,
-
-                          onChanged: (val) {
-                            setState(() => email = val);
-                          },
-
                         ),
                       ),
                       Container(
@@ -229,18 +232,21 @@ class _SignInState extends State<SignIn> {
                         decoration: const BoxDecoration(
                             border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
                         ),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              hintText: "Password",
-                              hintStyle: TextStyle(color: Colors.grey),
-                              border: InputBorder.none
-                          ),
-                          validator: (val) => val!.length < 6 ? 'password too short ' : null,
-                          obscureText: true,
-                          onChanged: (val) {
-                            setState(() => password = val);
-                          },
+                        child: Semantics(
+                          label: AppLocalizations.of(context)!.password ,
+                          child: TextFormField(
+                            decoration:  InputDecoration(
+                                hintText: AppLocalizations.of(context)!.password,
+                                hintStyle: const TextStyle(color: Colors.grey),
+                                border: InputBorder.none
+                            ),
+                            validator: (val) => val!.length < 6 ? 'password too short ' : null,
+                            obscureText: true,
+                            onChanged: (val) {
+                              setState(() => password = val);
+                            },
 
+                          ),
                         ),
                       ),
                     ],
@@ -257,7 +263,7 @@ class _SignInState extends State<SignIn> {
                       }),);
 
                   },
-                  child: const Text(" Forgot password ? " , style:TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,) ,)),
+                  child:  Text(AppLocalizations.of(context)!.forgotPassword , style: const TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,) ,)),
               const SizedBox(height: 40,),
                Container(
                 height: 50,
@@ -290,11 +296,11 @@ class _SignInState extends State<SignIn> {
               TextButton(onPressed: ()  {
                 widget.toggleView();
 
-              },  child: const Text('you dont have an account ? ') ),
+              },  child:  Text(AppLocalizations.of(context)!.youdonthaveanAccount) ),
 
 
               const SizedBox(height: 30,),
-               const Text("Continue with social media", style: TextStyle(color: Colors.grey),),
+                Text(AppLocalizations.of(context)!.continuewithsocialmedia, style: const TextStyle(color: Colors.grey),),
               const SizedBox(height: 30,),
               Row(
                 children: <Widget>[

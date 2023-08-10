@@ -18,6 +18,13 @@
   "appearance":"Appearance",
   "fontSize":"Font Size",
   "language":"Language",
-  "darkMode":"Dark Mode"
+  "darkMode":"Dark Mode",
+  "email": "email",
+  "password": "Password",
+  "forgotPassword": "Forgot password? ",
+  "youdonthaveanAccount": "You don't have an Account ?",
+  "continuewithsocialmedia": "Continue with Socila media",
+  "signUp": "sign up",
+  "youalreadyhaveanAccount": "You already have an account ? "
 
 }

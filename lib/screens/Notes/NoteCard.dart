@@ -14,6 +14,7 @@ class NoteCard extends StatelessWidget {
     return Semantics(
       label: 'Note: $title', // Add a label for accessibility
       child: Card(
+
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),

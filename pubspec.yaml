@@ -56,6 +56,17 @@ dependencies:
   intl: ^0.18.0
   intl_translation: ^0.18.2
   uuid: ^3.0.7
+  arcore_flutter_plugin: ^0.2.0-alpha
+  object_3d: ^0.0.1
+  flutter_launcher_icons: ^0.13.1
+  vector_math: ^2.1.4
+  color_blindness: ^0.1.2
+  speech_to_text: ^6.3.0
+
+flutter_icons:
+     android: true
+     ios: true
+     image_path: "assets/images/accessibility.png"
 
 
 
@@ -84,11 +95,15 @@ flutter:
     - assets/images/user.png
     - assets/animations/loading-circles.json
     - assets/animations/access.json
+    - assets/3d_objects/earth.glb
+    - assets/images/accessibility.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

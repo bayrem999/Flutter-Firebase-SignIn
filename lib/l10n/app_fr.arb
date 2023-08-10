@@ -18,6 +18,13 @@
   "appearance":"apparance",
   "fontSize":"Taille de police",
   "language":"langue",
-  "darkMode":" Mode Nuit"
+  "darkMode":" Mode Nuit",
+  "email": "adresse email",
+  "password": "mot de passe",
+  "forgotPassword": "mot de passe oublier ? ",
+  "youdonthaveanAccount": "tu n'as pas de compte ?",
+  "continuewithsocialmedia": "connecter avec reseaux sociaux",
+  "signUp": "sign up",
+  "youalreadyhaveanAccount": "tu as deja un compte ? "
 
 }

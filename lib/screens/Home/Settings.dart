@@ -18,6 +18,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   String _selectedLanguage = 'English';
+  bool _isHighContrastModeEnabled = false; // Set the initial value as needed
 
 
   @override
@@ -57,6 +58,24 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                 ),
                 _buildFontSizeTile(context),
+
+                SettingsTile.switchTile(
+                  initialValue: Provider.of<AppState>(context).isHighContrastModeEnabled,
+                  title: Text('High Contrast Mode'),
+                  leading: Icon(Icons.accessibility),
+                  onToggle: (value) {
+                    Provider.of<AppState>(context, listen: false).toggleHighContrastMode();
+                  },
+                ),
+                SettingsTile.switchTile(
+                  initialValue: Provider.of<AppState>(context).isColorBlindModeEnabled,
+                  title: Text('Color Blind Mode'),
+                  leading: Icon(Icons.color_lens),
+                  onToggle: (value) {
+                    Provider.of<AppState>(context, listen: false).isColorBlindModeEnabled = value;
+                  },
+                ),
+
               ],
             ),
             SettingsSection(
@@ -181,5 +200,11 @@ class _SettingsPageState extends State<SettingsPage> {
       },
       selected: isSelected,
     );
+  }
+
+  void toggleHighContrastMode() {
+    setState(() {
+      _isHighContrastModeEnabled = !_isHighContrastModeEnabled;
+    });
   }
 }

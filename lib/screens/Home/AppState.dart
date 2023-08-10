@@ -6,6 +6,10 @@ class AppState extends ChangeNotifier {
   bool _isDarkModeEnabled = false;
   double _fontSize = 16.0;
   FlutterTts? _flutterTts;
+  bool _isHighContrastModeEnabled = false; // Set the initial value as needed
+  bool get isHighContrastModeEnabled => _isHighContrastModeEnabled;
+  bool _isColorBlindModeEnabled = false;
+
 
 
 
@@ -29,6 +33,25 @@ class AppState extends ChangeNotifier {
 
   set fontSize(double value) {
     _fontSize = value;
+    notifyListeners();
+  }
+
+
+
+  set isHighContrastModeEnabled(bool value) {
+    _isHighContrastModeEnabled = value;
+    notifyListeners();
+  }
+
+  bool get isColorBlindModeEnabled => _isColorBlindModeEnabled;
+
+  set isColorBlindModeEnabled(bool value) {
+    _isColorBlindModeEnabled = value;
+    notifyListeners();
+  }
+
+  void toggleHighContrastMode() {
+    _isHighContrastModeEnabled = !_isHighContrastModeEnabled;
     notifyListeners();
   }
 }
