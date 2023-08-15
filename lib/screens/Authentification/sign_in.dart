@@ -319,13 +319,20 @@ class _SignInState extends State<SignIn> {
                   const SizedBox(width: 30,),
                   Expanded(
                     child:  Container(
+
                       height: 50,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           color: const Color(0xFFE53935)
                       ),
-                      child: const Center(
-                        child: Text("Google", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                      child:  Center(
+
+                        child: GestureDetector (
+                            onTap: () async {
+                              dynamic result = await _auth.signInWithGoogle();
+
+                            },
+                            child: Text("Google", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
                       ),
                     ),
                   )

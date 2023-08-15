@@ -38,7 +38,7 @@ class _notesState extends State<notes> {
         leading: BackButton(
           color: Colors.white,
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.orangeAccent,
         title: Text(
 
           AppLocalizations.of(context)!.notes, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),

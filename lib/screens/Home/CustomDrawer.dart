@@ -12,8 +12,9 @@ import 'package:sign_in/Models/Planets.dart';
 // ignore: camel_case_types
 class customDrawer extends StatefulWidget {
    final int selectedIndex;
+   final Planet? selectedPlanet;
 
-  const customDrawer(this.selectedIndex, {super.key});
+  const customDrawer(this.selectedIndex, {super.key, required this.selectedPlanet});
 
 
 
@@ -29,8 +30,13 @@ class _customDrawerState extends State<customDrawer> {
 
 
 
+
+
+
+
   @override
   Widget build(BuildContext context) {
+
     User? user = FirebaseAuth.instance.currentUser;
     var appState = Provider.of<AppState>(context);
 

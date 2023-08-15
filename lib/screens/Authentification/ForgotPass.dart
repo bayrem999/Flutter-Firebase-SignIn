@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sign_in/Services/auth.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ForgotPass extends StatefulWidget {
   const ForgotPass({super.key});
 
@@ -150,18 +151,21 @@ class _ForgotPassState extends State<ForgotPass> {
                                       decoration: const BoxDecoration(
                                           border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
                                       ),
-                                      child: TextFormField(
-                                        decoration: const InputDecoration(
-                                            hintText: "Enter your email",
-                                            hintStyle: TextStyle(color: Colors.grey),
-                                            border: InputBorder.none
+                                      child: Semantics(
+                                        label: AppLocalizations.of(context)!.email ,
+                                        child: TextFormField(
+                                          decoration: const InputDecoration(
+                                              hintText: "Enter your email",
+                                              hintStyle: TextStyle(color: Colors.grey),
+                                              border: InputBorder.none
+                                          ),
+
+                                          validator: (val) => val!.isEmpty ? 'enter an email ' : null,
+                                          onChanged: (val) {
+                                            setState(() => email = val);
+                                          },
+
                                         ),
-
-                                        validator: (val) => val!.isEmpty ? 'enter an email ' : null,
-                                        onChanged: (val) {
-                                          setState(() => email = val);
-                                        },
-
                                       ),
                                     ),
 
@@ -180,25 +184,28 @@ class _ForgotPassState extends State<ForgotPass> {
                                   color: Colors.orange[900]
                               ),
                               child: Center(
-                                child: GestureDetector(
+                                child: Semantics(
+                                    label: "reset password",
+                                  child: GestureDetector(
 
-                                    onTap: ()
-                                    async {
-                                      if (_formkey.currentState?.validate() == true)
-                                      {
-                                        dynamic result = await _auth.ResetPassword(email);
-
-                                        if(result == null)
-
+                                      onTap: ()
+                                      async {
+                                        if (_formkey.currentState?.validate() == true)
                                         {
-                                          setState(() => error = 'Wrong email ' );
+                                          dynamic result = await _auth.ResetPassword(email);
+
+                                          if(result == null)
+
+                                          {
+                                            setState(() => error = 'Wrong email ' );
+
+                                          }
 
                                         }
 
-                                      }
-
-                                    },
-                                    child: const Text("Reset password", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
+                                      },
+                                      child: const Text("Reset password", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
+                                ),
                               ),
                             ),
 

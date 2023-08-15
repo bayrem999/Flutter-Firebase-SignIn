@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:sign_in/Models/Font.dart';
 
 class AppState extends ChangeNotifier {
   int _selectedIndex = 0;
@@ -9,8 +10,24 @@ class AppState extends ChangeNotifier {
   bool _isHighContrastModeEnabled = false; // Set the initial value as needed
   bool get isHighContrastModeEnabled => _isHighContrastModeEnabled;
   bool _isColorBlindModeEnabled = false;
+  AppFont _selectedFont = AppFont(name: "Roboto", filePath: "assets/fonts/Roboto-Regular.ttf");
+  Locale _appLocale = Locale('en'); // Default app language
+
+  Locale get appLocale => _appLocale;
+   // Set a default font
+  AppFont get selectedFont => _selectedFont;
 
 
+  void setAppLanguage(Locale newLocale) {
+    _appLocale = newLocale;
+    notifyListeners();
+  }
+
+
+  set selectedFont(AppFont font) {
+    _selectedFont = font;
+    notifyListeners();
+  }
 
 
 

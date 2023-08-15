@@ -21,6 +21,7 @@ import 'package:sign_in/Models/Planets.dart';
 
 
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Planet defaultPlanet = Planet(name: 'Earth', modelPath: 'assets/3d_objects/earth.glb');
     final appState = Provider.of<AppState>(context);
 
 
@@ -78,13 +80,13 @@ class MyApp extends StatelessWidget {
             ],
 
             title: 'My App',
-              theme: getAppTheme(appState),
+              theme: getAppTheme(appState ),
 
             routes: {
               '/home': (context) => const home(),
-              '/ar': (context) =>  AR( planet: null,),
+              '/ar': (context) =>    AR() ,
               '/setting': (context) => const SettingsPage(),
-              '/notes' : (context)=> notes(),
+              '/notes' : (context)=> const notes(),
             },
             home: const splach(),
           );

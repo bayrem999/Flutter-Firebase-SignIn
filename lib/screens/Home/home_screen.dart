@@ -38,19 +38,65 @@ class _homeState extends State<home> {
 
     return Scaffold(
 
-      backgroundColor: Colors.blueAccent[50],
+
       appBar: AppBar(
 
         title: Text(AppLocalizations.of(context)!.homePage, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.orangeAccent,
         elevation: 0.0,
 
       ),
-      drawer: customDrawer(appState.selectedIndex),
+      drawer: customDrawer(appState.selectedIndex, selectedPlanet: null,),
 
 
 
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Welcome to My App',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.orange,
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Get ready for an amazing experience!',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.orange,
+              ),
+            ),
+            SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                // Add navigation logic here
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.orange,
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Text(
+                'Start Exploring',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
+
   }
 
 

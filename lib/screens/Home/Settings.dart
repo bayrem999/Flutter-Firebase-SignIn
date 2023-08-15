@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'AppState.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sign_in/Models/Font.dart';
 
 
 
@@ -27,10 +28,15 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.orangeAccent,
         title: Text(
+          AppLocalizations.of(context)!.settings,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            fontFamily: Provider.of<AppState>(context).selectedFont.filePath,
+            fontSize: Provider.of<AppState>(context).fontSize,
+          ),
+        ),
 
-          AppLocalizations.of(context)!.settings, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
       ),
       body: Semantics(
         label:  AppLocalizations.of(context)!.settings,
@@ -59,14 +65,40 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 _buildFontSizeTile(context),
 
-                SettingsTile.switchTile(
-                  initialValue: Provider.of<AppState>(context).isHighContrastModeEnabled,
-                  title: Text('High Contrast Mode'),
-                  leading: Icon(Icons.accessibility),
-                  onToggle: (value) {
-                    Provider.of<AppState>(context, listen: false).toggleHighContrastMode();
+                SettingsTile(
+                  title: Text('Font'),
+                  leading: Icon(Icons.font_download),
+                  description: Text(appState.selectedFont.name),
+                  onPressed: (context) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('Select Font'),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              _buildFontOption(
+                                'Calistoga',
+                                'assets/fonts/Calistoga-Regular.ttf',
+                                context,
+                              ),
+                              _buildFontOption(
+                                'Times New Roman',
+                                'assets/fonts/times_new_roman.ttf',
+                                context,
+                              ),
+                              // Add more font options here
+                            ],
+                          ),
+                        );
+                      },
+                    );
                   },
                 ),
+
+
+
                 SettingsTile.switchTile(
                   initialValue: Provider.of<AppState>(context).isColorBlindModeEnabled,
                   title: Text('Color Blind Mode'),
@@ -78,7 +110,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
               ],
             ),
-            SettingsSection(
+            /*SettingsSection(
               title: Semantics(
                 label:  AppLocalizations.of(context)!.language,
                 child: const Text('Language', style: TextStyle(color: Colors.orange)),
@@ -96,7 +128,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                 ),
               ],
-            ),
+            ),*/
           ],
         ),
       ),
@@ -109,6 +141,21 @@ class _SettingsPageState extends State<SettingsPage> {
       onPressed: _showFontSizeDialog,
     );
   }
+
+  Widget _buildFontOption(String fontName, String fontPath, BuildContext context) {
+    return ListTile(
+      title: Text(fontName),
+      onTap: () {
+        var appState = Provider.of<AppState>(context, listen: false);
+        appState.selectedFont = AppFont(name: fontName, filePath: fontPath);
+
+        Navigator.pop(context); // Close the dialog after selection
+      },
+    );
+  }
+
+
+
 
   void _showFontSizeDialog(BuildContext context) {
     showDialog(
@@ -166,7 +213,7 @@ class _SettingsPageState extends State<SettingsPage> {
       },
     );
   }
-  void _showLanguagePickerDialog() {
+  /*void _showLanguagePickerDialog() {
     showDialog(
       context: context,
       builder: (context) {
@@ -183,9 +230,9 @@ class _SettingsPageState extends State<SettingsPage> {
         );
       },
     );
-  }
+  }*/
 
-  Widget _buildLanguageOption(String language) {
+  /*Widget _buildLanguageOption(String language) {
     bool isSelected = _selectedLanguage == language;
     return RadioListTile(
       value: language,
@@ -195,12 +242,18 @@ class _SettingsPageState extends State<SettingsPage> {
         setState(() {
           _selectedLanguage = value as String;
           // Implement language change logic here
+          final appState = Provider.of<AppState>(context, listen: false);
+
+          // Update the app's locale
+          appState.(Locale(_selectedLanguage));
+
+          // Close the dialog after selection
+          Navigator.pop(context);
         });
-        Navigator.pop(context); // Close the dialog after selection
       },
       selected: isSelected,
     );
-  }
+  }*/
 
   void toggleHighContrastMode() {
     setState(() {

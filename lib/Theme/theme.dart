@@ -38,17 +38,17 @@ final ColorScheme highContrastColorScheme = ColorScheme(
 );*/
 
 ThemeData getAppTheme(AppState appState) {
-  if (appState.isHighContrastModeEnabled) {
+  if (appState.isColorBlindModeEnabled) {
     return ThemeData(
-      brightness: Brightness.light,
-      colorScheme: highContrastColorScheme,
-      // ... other properties ...
-    );
-  } else if (appState.isColorBlindModeEnabled) {
-    return ThemeData(
-      brightness: Brightness.dark,
+       brightness: Brightness.dark,
         colorScheme: colorBlindnessColorScheme(ColorScheme.dark(), ColorBlindnessType.protanomaly) ,// Use the color-blind color scheme
-      // ... other properties ...
+      textTheme: TextTheme(
+        bodyLarge: TextStyle(
+          fontFamily: appState.selectedFont.filePath, // Apply selected font
+          fontSize: appState.fontSize,
+        ),
+        // ... other text styles ...
+      ),
     );
   } else if (appState.isDarkModeEnabled) {
     return ThemeData.dark();

@@ -177,17 +177,20 @@ class _RegisterState extends State<Register> {
                                       decoration: const BoxDecoration(
                                           border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
                                       ),
-                                      child: TextFormField(
-                                        decoration:  InputDecoration(
-                                            hintText: AppLocalizations.of(context)!.email,
-                                            hintStyle: const TextStyle(color: Colors.grey),
-                                            border: InputBorder.none
-                                        ),
-                                        validator: (val) => val!.isEmpty ? 'enter an email ' : null,
-                                        onChanged: (val) {
-                                          setState(() => email = val);
-                                        },
+                                      child: Semantics(
+                                        label: AppLocalizations.of(context)!.email ,
+                                        child: TextFormField(
+                                          decoration:  InputDecoration(
+                                              hintText: AppLocalizations.of(context)!.email,
+                                              hintStyle: const TextStyle(color: Colors.grey),
+                                              border: InputBorder.none
+                                          ),
+                                          validator: (val) => val!.isEmpty ? 'enter an email ' : null,
+                                          onChanged: (val) {
+                                            setState(() => email = val);
+                                          },
 
+                                        ),
                                       ),
                                     ),
                                     Container(
@@ -195,18 +198,21 @@ class _RegisterState extends State<Register> {
                                       decoration: const BoxDecoration(
                                           border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
                                       ),
-                                      child: TextFormField(
-                                        decoration:  InputDecoration(
-                                            hintText: AppLocalizations.of(context)!.password,
-                                            hintStyle:const TextStyle(color: Colors.grey),
-                                            border: InputBorder.none
-                                        ),
-                                        validator: (val) => val!.length < 6 ? 'password too short ' : null,
-                                        obscureText: true,
-                                        onChanged: (val) {
-                                          setState(() => password = val);
-                                        },
+                                      child: Semantics(
+                                        label: AppLocalizations.of(context)!.password ,
+                                        child: TextFormField(
+                                          decoration:  InputDecoration(
+                                              hintText: AppLocalizations.of(context)!.password,
+                                              hintStyle:const TextStyle(color: Colors.grey),
+                                              border: InputBorder.none
+                                          ),
+                                          validator: (val) => val!.length < 6 ? 'password too short ' : null,
+                                          obscureText: true,
+                                          onChanged: (val) {
+                                            setState(() => password = val);
+                                          },
 
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -215,37 +221,43 @@ class _RegisterState extends State<Register> {
                             ),
 
                             const SizedBox(height: 40,),
-                            Container(
-                              height: 50,
-                              margin: const EdgeInsets.symmetric(horizontal: 50),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.orange[900]
-                              ),
-                              child: Center(
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    if (_formkey.currentState?.validate() == true)
-                                    {
-                                      dynamic result = await _auth.registerWithEmailAndPassword(email, password);
-                                      if(result == null)
-
+                            Semantics(
+                              label: AppLocalizations.of(context)!.signUp ,
+                              child: Container(
+                                height: 50,
+                                margin: const EdgeInsets.symmetric(horizontal: 50),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Colors.orange[900]
+                                ),
+                                child: Center(
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      if (_formkey.currentState?.validate() == true)
                                       {
-                                        setState(() => error = 'Please enter a valid email ' );
+                                        dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                                        if(result == null)
+
+                                        {
+                                          setState(() => error = 'Please enter a valid email ' );
+
+                                        }
 
                                       }
+                                    },
 
-                                    }
-                                  },
-
-                                    child:  Text(AppLocalizations.of(context)!.signUp, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
+                                      child:  Text(AppLocalizations.of(context)!.signUp, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
+                                ),
                               ),
                             ),
 
-                            TextButton(onPressed: ()  {
-                              widget.toggleView();
+                            Semantics(
+                              label: AppLocalizations.of(context)!.youalreadyhaveanAccount ,
+                              child: TextButton(onPressed: ()  {
+                                widget.toggleView();
 
-                            },  child:  Text(AppLocalizations.of(context)!.youalreadyhaveanAccount,) ),
+                              },  child:  Text(AppLocalizations.of(context)!.youalreadyhaveanAccount,) ),
+                            ),
 
 
                             const SizedBox(height: 30,),

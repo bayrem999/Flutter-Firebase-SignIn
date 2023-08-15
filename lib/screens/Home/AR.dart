@@ -1,54 +1,95 @@
-import 'package:flutter/material.dart';
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart' hide Colors ;
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in/screens/Home/AppState.dart';
 import 'package:sign_in/screens/Home/CustomDrawer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:object_3d/object_3d.dart';
 import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
-
-import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/src/material/colors.dart ';
+import 'package:vector_math/vector_math_64.dart' as vector64 ;
 import '../../Models/Planets.dart';
 
 class AR extends StatefulWidget {
-  AR( {super.key, required this.planet});
-  final Planet planet;
 
 
 
 
   @override
-  State<AR> createState() => _ARState();
-
+  _ARState createState() => _ARState();
 }
 
 class _ARState extends State<AR> {
-  ArCoreController? arCoreController;
-  String selectedPlanet = 'earth'; // Default planet
+  late ArCoreController arCoreController;
+  late  Planet defaultPlanet = Planet(name: 'Earth', modelPath: 'assets/3d_objects/earth.glb');
+
 
   @override
-  Widget build(BuildContext context) {
-    var appState = Provider.of<AppState>(context);
-    final planet = ModalRoute.of(context)?.settings.arguments as Planet?;
-    return  Scaffold(
+  void dispose() {
+    arCoreController.dispose();
+    super.dispose();
 
-      appBar: AppBar(title: Text(widget.planet.name),
-        /*leading: BackButton(
-        color: Colors.white,
-      ),
-      backgroundColor: Colors.black,*/
-      ),
+  }
 
-      body: ArCoreView(
-        onArCoreViewCreated: _onArCoreViewCreated,
-        enableTapRecognizer: true,
-      ),
+  void _onArViewCreated(ArCoreController controller) {
+    arCoreController = controller;
 
+    displayearthmap(arCoreController);
+
+  }
+
+  displayearthmap (ArCoreController controller ) async {
+
+    final ByteData  earthtexturebytes = await rootBundle.load("assets/3d_objects/earth_map.jpg");
+    final materials = ArCoreMaterial(
+      color: Colors.blue ,
+      textureBytes: earthtexturebytes.buffer.asUint8List() ,
 
     );
+    final sphere = ArCoreSphere(materials: [materials],
+
+    );
+
+    final node = ArCoreNode(
+
+      shape:sphere,
+      position: vector64.Vector3(1,0, -1.5),
+    );
+    arCoreController.addArCoreNode(node);
   }
-void _onArCoreViewCreated(ArCoreController controller){
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.orangeAccent,
+        title: Text(""),
+      ),
+      body: ArCoreView(
+        onArCoreViewCreated: _onArViewCreated,
+        enableTapRecognizer: true,
+        enablePlaneRenderer: true,
+      ),
+    );
+  }
+
+  void _onArCoreViewCreated(ArCoreController controller) {
+    arCoreController = controller;
+
+
+  }
+
+
+}
+
+
+/*void _onArCoreViewCreated(ArCoreController controller){
 arCoreController = controller;
 _loadPlanetModel();
+_buildPlanetButton('earth');
+
 
 
 }
@@ -74,7 +115,7 @@ _loadPlanetModel();
       },
       child: Text(planet),
     );
-  }
-}
+  }*/
+
 
 
