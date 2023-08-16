@@ -1,6 +1,7 @@
-class AppFont {
-  final String name;
-  final String filePath;
 
-  AppFont({required this.name, required this.filePath});
+enum AppFont {
+  roboto, // Default font
+  openDyslexic,
+  dinAlternate,
+  // Add more options as needed
 }

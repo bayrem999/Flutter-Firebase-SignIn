@@ -4,6 +4,7 @@ import 'package:settings_ui/settings_ui.dart';
 import 'AppState.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:sign_in/Models/Font.dart';
+import 'package:sign_in/Theme/theme.dart';
 
 
 
@@ -22,6 +23,8 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _isHighContrastModeEnabled = false; // Set the initial value as needed
 
 
+
+
   @override
   Widget build(BuildContext context) {
     var appState = Provider.of<AppState>(context, listen: false);
@@ -31,15 +34,18 @@ class _SettingsPageState extends State<SettingsPage> {
         backgroundColor: Colors.orangeAccent,
         title: Text(
           AppLocalizations.of(context)!.settings,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontFamily: Provider.of<AppState>(context).selectedFont.filePath,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            fontFamily:
+            _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
             fontSize: Provider.of<AppState>(context).fontSize,
           ),
         ),
 
+
       ),
       body: Semantics(
         label:  AppLocalizations.of(context)!.settings,
+
         child: SettingsList(
           sections: [
             SettingsSection(
@@ -47,7 +53,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 label:  AppLocalizations.of(context)!.appearance,
                 child: Text(
                   AppLocalizations.of(context)!.appearance,
-                  style: const TextStyle(color: Colors.orange),
+                  style: const TextStyle(color: Colors.orange, fontFamily: ''),
                 ),
               ),
               tiles: [
@@ -63,39 +69,10 @@ class _SettingsPageState extends State<SettingsPage> {
                     Provider.of<AppState>(context, listen: false).isDarkModeEnabled = value;
                   },
                 ),
-                _buildFontSizeTile(context),
 
-                SettingsTile(
-                  title: Text('Font'),
-                  leading: Icon(Icons.font_download),
-                  description: Text(appState.selectedFont.name),
-                  onPressed: (context) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text('Select Font'),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              _buildFontOption(
-                                'Calistoga',
-                                'assets/fonts/Calistoga-Regular.ttf',
-                                context,
-                              ),
-                              _buildFontOption(
-                                'Times New Roman',
-                                'assets/fonts/times_new_roman.ttf',
-                                context,
-                              ),
-                              // Add more font options here
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
+
+               _buildFontSizeTile(context),
+                _buildFontFamilyTile(context,appState),
 
 
 
@@ -108,27 +85,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                 ),
 
+
               ],
             ),
-            /*SettingsSection(
-              title: Semantics(
-                label:  AppLocalizations.of(context)!.language,
-                child: const Text('Language', style: TextStyle(color: Colors.orange)),
-              ),
-              tiles: [
-                SettingsTile(
-                  title: const Text('Language'),
-                  leading: const Icon(Icons.language),
-                  description: Semantics(
-                    label: _selectedLanguage,
-                    child: Text(_selectedLanguage),
-                  ),
-                  onPressed: (context) {
-                    _showLanguagePickerDialog();
-                  },
-                ),
-              ],
-            ),*/
           ],
         ),
       ),
@@ -142,20 +101,93 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildFontOption(String fontName, String fontPath, BuildContext context) {
-    return ListTile(
-      title: Text(fontName),
-      onTap: () {
-        var appState = Provider.of<AppState>(context, listen: false);
-        appState.selectedFont = AppFont(name: fontName, filePath: fontPath);
+  // change font
 
-        Navigator.pop(context); // Close the dialog after selection
+
+
+
+  String _getFontFamilyFromAppFont(AppFont appFont) {
+    switch (appFont) {
+      case AppFont.roboto:
+        return 'Roboto';
+      case AppFont.openDyslexic:
+        return 'OpenDyslexic'; // Replace with actual font family name
+      case AppFont.dinAlternate:
+        return 'DINAlternate'; // Replace with actual font family name
+    }
+  }
+
+  String _getFontName(AppFont font) {
+    switch (font) {
+      case AppFont.roboto:
+        return 'Roboto';
+      case AppFont.openDyslexic:
+        return 'OpenDyslexic'; // Replace with actual font name
+      case AppFont.dinAlternate:
+        return 'DIN Alternate'; // Replace with actual font name
+    }
+  }
+
+  SettingsTile _buildFontFamilyTile(BuildContext context, AppState appState) {
+    return SettingsTile(
+      title: Semantics(
+        label: 'Font Family', // You can localize this label if needed
+        child: Text('Font Family'),
+      ),
+      description: Text(
+        _getFontName(appState.selectedFont),
+        style: TextStyle(fontFamily: _getFontFamilyFromAppFont(appState.selectedFont)),
+      ),
+      leading: Icon(Icons.font_download),
+      onPressed: (_) {
+        print('Current Font: ${appState.selectedFont}'); // Debug print
+        _showFontDialog(appState,context);
+        setState(() {
+          // Trigger a rebuild to apply font changes
+        });
       },
     );
   }
 
 
 
+  void _showFontDialog(AppState appState, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Select Font Family'),
+        content: DropdownButton<AppFont>(
+          value: appState.selectedFont,
+          onChanged: (newFont) {
+            setState(() {
+              appState.changeFont(newFont!);
+            });
+            Navigator.pop(context);
+          },
+          items: AppFont.values.map((font) {
+            return DropdownMenuItem<AppFont>(
+              value: font,
+              child: Text(_getFontName(font)),
+            );
+          }).toList(),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              print('Current Font: ${appState.selectedFont}'); // Debug print
+
+            },
+            child: Text('Cancel'),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
+// end change font
 
   void _showFontSizeDialog(BuildContext context) {
     showDialog(
