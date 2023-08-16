@@ -13,6 +13,7 @@ import 'package:uuid/uuid.dart';
 
 
 import '../../Models/Planets.dart';
+import '../../Services/ThemeService.dart';
 import '../Notes/NoteCard.dart';
 
 
@@ -28,6 +29,7 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   final AuthService _auth= AuthService();
+  final themeService _fontx = themeService();
   String? userId;
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,9 @@ class _homeState extends State<home> {
 
       appBar: AppBar(
 
-        title: Text(AppLocalizations.of(context)!.homePage, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+        title: Text(AppLocalizations.of(context)!.homePage, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+            fontSize: Provider.of<AppState>(context).fontSize )),
         backgroundColor: Colors.orangeAccent,
         elevation: 0.0,
 
@@ -55,7 +59,7 @@ class _homeState extends State<home> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Welcome to My App',
               style: TextStyle(
                 fontSize: 24,
@@ -64,26 +68,26 @@ class _homeState extends State<home> {
               ),
             ),
             SizedBox(height: 20),
-            Text(
+           const Text(
               'Get ready for an amazing experience!',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.orange,
               ),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
                 // Add navigation logic here
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.orange,
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                backgroundColor: Colors.orange,
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: Text(
+              child: const Text(
                 'Start Exploring',
                 style: TextStyle(
                   fontSize: 18,

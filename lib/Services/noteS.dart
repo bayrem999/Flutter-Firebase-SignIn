@@ -3,12 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sign_in/Models/Note.dart';
 import 'package:sign_in/Services/auth.dart';
 
+import '../Models/Font.dart';
+
 class NoteService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String _collectionPath = 'notes'; // Replace with your collection path
   User? user = FirebaseAuth.instance.currentUser;
   final AuthService _auth= AuthService();
   String? userId ;
+
+
 
 
 

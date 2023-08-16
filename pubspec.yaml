@@ -107,9 +107,15 @@ flutter:
     - family: OpenDyslexic
       fonts:
         - asset: assets/fonts/OpenDyslexic-Regular.otf
+
+    - family: DINAlternate
+      fonts:
+        - asset: assets/fonts/DINAlternate-Bold.ttf
+
     - family: Calistoga
       fonts:
         - asset: assets/fonts/Calistoga-Regular.ttf
+
     - family: Times New Roman
       fonts:
         - asset: assets/fonts/times_new_roman.ttf

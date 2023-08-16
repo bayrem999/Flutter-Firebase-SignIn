@@ -39,31 +39,56 @@ final ColorScheme highContrastColorScheme = ColorScheme(
 );*/ThemeData getAppTheme(AppState appState) {
   if (appState.isHighContrastModeEnabled) {
     return ThemeData(
-      brightness: Brightness.light,
-      colorScheme: highContrastColorScheme,
+      brightness: Brightness.dark,
+      colorScheme: ColorScheme(
+        primary: Colors.indigo, // Change to a color that's distinguishable for color blindness
+        primaryContainer: Colors.indigoAccent, // You can choose another variant color
+        secondary: Colors.orange, // Change to a color that's distinguishable
+        secondaryContainer: Colors.deepOrange, // You can choose another variant color
+        surface: Colors.grey[800]!,
+        background: Colors.grey[900]!,
+        error: Colors.red,
+        onPrimary: Colors.white,
+        onSecondary: Colors.black,
+        onSurface: Colors.white,
+        onBackground: Colors.white,
+        onError: Colors.white,
+        brightness: Brightness.dark,
+
+      ),
+
       // ... other properties ...
     );
   } else if (appState.isColorBlindModeEnabled) {
     return ThemeData(
       brightness: Brightness.dark,
-      colorScheme: colorBlindnessColorScheme(
-        ColorScheme.highContrastDark(),
-        ColorBlindnessType.protanomaly,
-      ), // Use the color-blind color scheme
+      colorScheme: ColorScheme(
+        primary: Colors.indigo, // Change to a color that's distinguishable for color blindness
+        primaryContainer: Colors.indigoAccent, // You can choose another variant color
+        secondary: Colors.orange, // Change to a color that's distinguishable
+        secondaryContainer: Colors.deepOrange, // You can choose another variant color
+        surface: Colors.grey[800]!,
+        background: Colors.grey[900]!,
+        error: Colors.red,
+        onPrimary: Colors.white,
+        onSecondary: Colors.black,
+        onSurface: Colors.white,
+        onBackground: Colors.white,
+        onError: Colors.white,
+        brightness: Brightness.dark,
+
+      ),
+
       // ... other properties ...
     );
   } else if (appState.isDarkModeEnabled) {
+
     return ThemeData.dark();
   } else {
     // Here, you can also consider applying the selected font
     final selectedFont = _getFontFamilyFromAppFont(appState.selectedFont);
 
-    return ThemeData.light().copyWith(
-      textTheme: ThemeData.dark().textTheme.copyWith(
-        bodyMedium: TextStyle(fontFamily: selectedFont),
-        // ... update other text styles as needed ...
-      ),
-    );
+    return ThemeData();
   }
 
 

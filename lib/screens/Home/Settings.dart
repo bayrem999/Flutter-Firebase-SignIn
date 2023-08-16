@@ -53,7 +53,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 label:  AppLocalizations.of(context)!.appearance,
                 child: Text(
                   AppLocalizations.of(context)!.appearance,
-                  style: const TextStyle(color: Colors.orange, fontFamily: ''),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontFamily:
+                    _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+                    fontSize: Provider.of<AppState>(context).fontSize,
+                  ),
                 ),
               ),
               tiles: [
@@ -61,7 +65,13 @@ class _SettingsPageState extends State<SettingsPage> {
                   initialValue: Provider.of<AppState>(context).isDarkModeEnabled,
                   title: Semantics(
                     label: AppLocalizations.of(context)!.darkMode,
-                    child: Text(AppLocalizations.of(context)!.darkMode),
+                    child: Text(AppLocalizations.of(context)!.darkMode,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontFamily:
+                        _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+                        fontSize: Provider.of<AppState>(context).fontSize,
+                      ),
+                    ),
                   ),
                   leading: const Icon(Icons.dark_mode),
                   activeSwitchColor: Colors.orange,
@@ -132,7 +142,11 @@ class _SettingsPageState extends State<SettingsPage> {
     return SettingsTile(
       title: Semantics(
         label: 'Font Family', // You can localize this label if needed
-        child: Text('Font Family'),
+        child: Text('Font Family',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          fontFamily:
+          _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+          fontSize: Provider.of<AppState>(context).fontSize,
+        ),),
       ),
       description: Text(
         _getFontName(appState.selectedFont),
@@ -155,7 +169,11 @@ class _SettingsPageState extends State<SettingsPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Select Font Family'),
+        title: Text('Select Font Family',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          fontFamily:
+          _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+          fontSize: Provider.of<AppState>(context).fontSize,
+        ),),
         content: DropdownButton<AppFont>(
           value: appState.selectedFont,
           onChanged: (newFont) {
@@ -178,7 +196,11 @@ class _SettingsPageState extends State<SettingsPage> {
               print('Current Font: ${appState.selectedFont}'); // Debug print
 
             },
-            child: Text('Cancel'),
+            child: Text('Cancel',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontFamily:
+              _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+              fontSize: Provider.of<AppState>(context).fontSize,
+            ),),
           ),
         ],
       ),
@@ -198,7 +220,11 @@ class _SettingsPageState extends State<SettingsPage> {
         return Semantics(
           label: 'Choose Font Size Dialog',
           child: AlertDialog(
-            title: const Text('Choose Font Size'),
+            title:  Text('Choose Font Size',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontFamily:
+              _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+              fontSize: Provider.of<AppState>(context).fontSize,
+            ),),
             contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
             content: SingleChildScrollView(
@@ -225,7 +251,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 label : 'Cancel button',
                 child: TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child:  Text('Cancel',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontFamily:
+                    _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+                    fontSize: Provider.of<AppState>(context).fontSize,
+                  ),),
                 ),
               ),
               Semantics(
@@ -236,7 +266,11 @@ class _SettingsPageState extends State<SettingsPage> {
                     // Then close the dialog.
                     Navigator.pop(context);
                   },
-                  child: const Text('Save'),
+                  child:  Text('Save',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontFamily:
+                    _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+                    fontSize: Provider.of<AppState>(context).fontSize,
+                  ),),
                 ),
               ),
             ],

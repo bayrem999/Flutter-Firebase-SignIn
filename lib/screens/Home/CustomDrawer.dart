@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sign_in/Services/ThemeService.dart';
 import 'package:sign_in/Services/auth.dart';
 import 'package:sign_in/screens/Home/AppState.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,6 +27,7 @@ class customDrawer extends StatefulWidget {
 // ignore: camel_case_types
 class _customDrawerState extends State<customDrawer> {
   final AuthService _auth= AuthService();
+  final themeService _fontx = themeService();
 
 
 
@@ -49,7 +51,9 @@ class _customDrawerState extends State<customDrawer> {
         children: [
           UserAccountsDrawerHeader(
             accountName: null,
-            accountEmail: Text(' ${user?.email ?? "N/A"}', style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+            accountEmail: Text(' ${user?.email ?? "N/A"}',  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+                fontSize: Provider.of<AppState>(context).fontSize ),),
             currentAccountPicture: const CircleAvatar(
               child: Icon(Icons.person),
             ),
@@ -69,7 +73,9 @@ class _customDrawerState extends State<customDrawer> {
             label:  AppLocalizations.of(context)!.home,
             child: ListTile(
               leading: const Icon(Icons.home),
-            title: Text( AppLocalizations.of(context)!.home , style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+            title: Text( AppLocalizations.of(context)!.home, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+                fontSize: Provider.of<AppState>(context).fontSize ),),
               onTap: () {
                 var appState = Provider.of<AppState>(context, listen: false);
                 appState.selectedIndex = 0;
@@ -84,7 +90,9 @@ class _customDrawerState extends State<customDrawer> {
             label:  AppLocalizations.of(context)!.arExperience,
             child: ListTile(
               leading: const Icon(Icons.camera),
-              title: Text(AppLocalizations.of(context)!.arExperience, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+              title: Text(AppLocalizations.of(context)!.arExperience,  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+                  fontSize: Provider.of<AppState>(context).fontSize ),),
               onTap: () {
                 var appState = Provider.of<AppState>(context, listen: false);
                 appState.selectedIndex = 1;
@@ -99,7 +107,9 @@ class _customDrawerState extends State<customDrawer> {
                 label:  AppLocalizations.of(context)!.notes,
                 child: ListTile(
                   leading: const Icon(Icons.note_alt_sharp),
-                  title: Text( AppLocalizations.of(context)!.notes , style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+                  title: Text( AppLocalizations.of(context)!.notes, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+                      fontSize: Provider.of<AppState>(context).fontSize ),),
                   onTap: () {
                     var appState = Provider.of<AppState>(context, listen: false);
                     appState.selectedIndex = 2;
@@ -116,7 +126,9 @@ class _customDrawerState extends State<customDrawer> {
                 label:  AppLocalizations.of(context)!.settings,
                 child: ListTile(
                   leading: const Icon(Icons.settings),
-                  title: Text(AppLocalizations.of(context)!.settings, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+                  title: Text(AppLocalizations.of(context)!.settings, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+                      fontSize: Provider.of<AppState>(context).fontSize )),
                   onTap: () {
                     var appState = Provider.of<AppState>(context, listen: false);
                     appState.selectedIndex = 3;
@@ -133,7 +145,9 @@ class _customDrawerState extends State<customDrawer> {
                 label:  AppLocalizations.of(context)!.logout,
                 child: ListTile(
                   leading: const Icon(Icons.logout),
-                  title: Text(AppLocalizations.of(context)!.logout, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+                  title: Text(AppLocalizations.of(context)!.logout, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+                      fontSize: Provider.of<AppState>(context).fontSize )),
                   onTap: () async {
                     await _auth.signOut();
 

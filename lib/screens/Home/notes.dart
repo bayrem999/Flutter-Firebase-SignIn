@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sign_in/Services/ThemeService.dart';
 import 'package:uuid/uuid.dart';
 import 'package:provider/provider.dart';
 import 'AppState.dart';
@@ -7,6 +8,8 @@ import '../../Models/Note.dart';
 import '../../Services/auth.dart';
 import '../../Services/noteS.dart';
 import '../Notes/NoteCard.dart';
+import 'package:sign_in/screens/Home/Settings.dart';
+import 'package:sign_in/Theme/theme.dart';
 
 class notes extends StatefulWidget {
   const notes({super.key});
@@ -18,6 +21,7 @@ class notes extends StatefulWidget {
 class _notesState extends State<notes> {
   final AuthService _auth= AuthService();
   final NoteService _note = NoteService();
+  final themeService _fontx = themeService();
 
   List<Note> notes = [];
 
@@ -41,7 +45,10 @@ class _notesState extends State<notes> {
         backgroundColor: Colors.orangeAccent,
         title: Text(
 
-          AppLocalizations.of(context)!.notes, style: TextStyle(fontSize: Provider.of<AppState>(context).fontSize),),
+          AppLocalizations.of(context)!.notes, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+          fontSize: Provider.of<AppState>(context).fontSize,
+        ),),
       ),
       body: FutureBuilder<List<Note>>(
         future: _note.getNotesForCurrentUser(),
@@ -49,7 +56,9 @@ class _notesState extends State<notes> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error fetching notes'));
+            return Center(child: Text('Error fetching notes',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+              fontSize: Provider.of<AppState>(context).fontSize,)));
           } else if (snapshot.hasData) {
             List<Note> notes = snapshot.data!;
 
@@ -62,7 +71,9 @@ class _notesState extends State<notes> {
               },
             );
           } else {
-            return Center(child: Text('No notes found'));
+            return Center(child: Text('No notes found',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+              fontSize: Provider.of<AppState>(context).fontSize )));
           }
         },
       ),
