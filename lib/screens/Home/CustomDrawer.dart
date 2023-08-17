@@ -54,13 +54,18 @@ class _customDrawerState extends State<customDrawer> {
             accountEmail: Text(' ${user?.email ?? "N/A"}',  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
                 fontSize: Provider.of<AppState>(context).fontSize ),),
-            currentAccountPicture: const CircleAvatar(
-              child: Icon(Icons.person),
+            currentAccountPicture: Center(
+              child: Image.asset(
+                'assets/images/accessibility.png', // Replace with your image path
+                width: 64.0, // Adjust the width as needed
+                height: 64.0, // Adjust the height as needed
+                alignment: Alignment.center,
+              ),
             ),
             decoration: BoxDecoration(
               color: Colors.orange.shade700,
               gradient: const LinearGradient(
-                colors: [Colors.black, Colors.black],
+                colors: [Colors.orangeAccent, Colors.white54],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -149,9 +154,31 @@ class _customDrawerState extends State<customDrawer> {
                       fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
                       fontSize: Provider.of<AppState>(context).fontSize )),
                   onTap: () async {
-                    await _auth.signOut();
+                    // Show a confirmation dialog
+                    bool confirmLogout = await showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text('Confirm Logout'),
+                        content: Text('Are you sure you want to log out?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, false), // Cancel
+                            child: Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, true), // Confirm
+                            child: Text('Logout'),
+                          ),
+                        ],
+                      ),
+                    );
 
+                    // If the user confirmed, log out
+                    if (confirmLogout == true) {
+                      await _auth.signOut();
+                    }
                   },
+
 
                 ),
               )

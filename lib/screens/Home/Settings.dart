@@ -6,6 +6,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:sign_in/Models/Font.dart';
 import 'package:sign_in/Theme/theme.dart';
 
+import 'CustomDrawer.dart';
+
 
 
 class SettingsPage extends StatefulWidget {
@@ -43,6 +45,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
 
       ),
+      drawer: customDrawer(appState.selectedIndex, selectedPlanet: null,),
       body: Semantics(
         label:  AppLocalizations.of(context)!.settings,
 

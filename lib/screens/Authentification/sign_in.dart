@@ -157,7 +157,7 @@ class _SignInState extends State<SignIn> {
     child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
-    const SizedBox(height: 80,),
+    const SizedBox(height: 10,),
     const Padding(
     padding: EdgeInsets.all(20),
 
@@ -175,7 +175,7 @@ class _SignInState extends State<SignIn> {
 
 
     ),
-    const SizedBox(height: 20),
+    const SizedBox(height: 10),
     Expanded(
     child: Container(
     decoration: const BoxDecoration(
@@ -184,162 +184,157 @@ class _SignInState extends State<SignIn> {
     ),
 
 
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 60,),
-               Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow:const [ BoxShadow(
-                        color: Color.fromRGBO(225, 95, 27, .3),
-                        blurRadius: 20,
-                        offset: Offset(0, 10)
-                    )]
-                ),
+      child: Padding(
+        padding: const EdgeInsets.all(30),
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 20,),
+             Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow:const [ BoxShadow(
+                      color: Color.fromRGBO(225, 95, 27, .3),
+                      blurRadius: 20,
+                      offset: Offset(0, 10)
+                  )]
+              ),
 
-                child: Form(
-                  key: _formkey,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(
-                            border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
-                        ),
-                        child: Semantics(
-                          label:  AppLocalizations.of(context)!.email,
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                                hintText: "Email",
-                                hintStyle: TextStyle(color: Colors.grey),
-                                border: InputBorder.none
-                            ),
-                            validator: (val) => val!.isEmpty ? 'enter an email ' : null,
-
-                            onChanged: (val) {
-                              setState(() => email = val);
-                            },
-
+              child: Form(
+                key: _formkey,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                          border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
+                      ),
+                      child: Semantics(
+                        label:  AppLocalizations.of(context)!.email,
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                              hintText: "Email",
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: InputBorder.none,
                           ),
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (val) => val!.isEmpty ? 'enter an email ' : null,
+                          onChanged: (val) {
+                            setState(() => email = val);
+                          },
+
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(
-                            border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
-                        ),
-                        child: Semantics(
-                          label: AppLocalizations.of(context)!.password ,
-                          child: TextFormField(
-                            decoration:  InputDecoration(
-                                hintText: AppLocalizations.of(context)!.password,
-                                hintStyle: const TextStyle(color: Colors.grey),
-                                border: InputBorder.none
-                            ),
-                            validator: (val) => val!.length < 6 ? 'password too short ' : null,
-                            obscureText: true,
-                            onChanged: (val) {
-                              setState(() => password = val);
-                            },
-
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                          border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
+                      ),
+                      child: Semantics(
+                        label: AppLocalizations.of(context)!.password ,
+                        child: TextFormField(
+                          decoration:  InputDecoration(
+                              hintText: AppLocalizations.of(context)!.password,
+                              hintStyle: const TextStyle(color: Colors.grey),
+                              border: InputBorder.none
                           ),
+                          keyboardType: TextInputType.number,
+                          validator: (val) => val!.length < 6 ? 'password too short ' : null,
+                          obscureText: true,
+                          onChanged: (val) {
+                            setState(() => password = val);
+                          },
+
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 40,),
-              GestureDetector(
-                  onTap: (){
-                    Navigator.push(context,
-                      MaterialPageRoute(builder: (context)
+            ),
+            const SizedBox(height: 40,),
+            GestureDetector(
+                onTap: (){
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context)
+                    {
+                      return const ForgotPass();
+                    }),);
+
+                },
+                child:  Text(AppLocalizations.of(context)!.forgotPassword , style: const TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,) ,)),
+            const SizedBox(height: 35,),
+             Container(
+              height: 50,
+              margin: const EdgeInsets.symmetric(horizontal: 50),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.orange[900]
+              ),
+              child: Center(
+                child: GestureDetector(
+                    onTap: () async {
+                      if (_formkey.currentState?.validate() == true)
                       {
-                        return const ForgotPass();
-                      }),);
+                        dynamic result = await _auth.signinWithEmailAndPassword(email, password);
 
-                  },
-                  child:  Text(AppLocalizations.of(context)!.forgotPassword , style: const TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,) ,)),
-              const SizedBox(height: 40,),
-               Container(
-                height: 50,
-                margin: const EdgeInsets.symmetric(horizontal: 50),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: Colors.orange[900]
-                ),
-                child: Center(
-                  child: GestureDetector(
-                      onTap: () async {
-                        if (_formkey.currentState?.validate() == true)
+                        if(result == null)
                         {
-                          dynamic result = await _auth.signinWithEmailAndPassword(email, password);
-
-                          if(result == null)
-
-                          {
-                            setState(() => error = 'Wrong credentials ' );
-
-                          }
-
+                          setState(() => error = 'Wrong credentials ' );
                         }
-
-                      },
-                      child: const Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
-                ),
+                      }
+                    },
+                    child: const Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
               ),
+            ),
 
-              TextButton(onPressed: ()  {
-                widget.toggleView();
+            TextButton(onPressed: ()  {
+              widget.toggleView();
 
-              },  child:  Text(AppLocalizations.of(context)!.youdonthaveanAccount) ),
+            },  child:  Text(AppLocalizations.of(context)!.youdonthaveanAccount) ),
 
 
-              const SizedBox(height: 30,),
-                Text(AppLocalizations.of(context)!.continuewithsocialmedia, style: const TextStyle(color: Colors.grey),),
-              const SizedBox(height: 30,),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child:  Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: Colors.blue
-                      ),
-                      child: const Center(
-                        child: Text("Facebook", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                      ),
+            const SizedBox(height: 10,),
+              Text(AppLocalizations.of(context)!.continuewithsocialmedia, style: const TextStyle(color: Colors.grey),),
+            const SizedBox(height: 10,),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child:  Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.blue
+                    ),
+                    child: const Center(
+                      child: Text("Facebook", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                     ),
                   ),
-                  const SizedBox(width: 30,),
-                  Expanded(
-                    child:  Container(
+                ),
+                const SizedBox(width: 10,),
+                Expanded(
+                  child:  Container(
 
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: const Color(0xFFE53935)
-                      ),
-                      child:  Center(
-
-                        child: GestureDetector (
-                            onTap: () async {
-                              dynamic result = await _auth.signInWithGoogle();
-
-                            },
-                            child: Text("Google", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
-                      ),
+                    height: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: const Color(0xFFE53935)
                     ),
-                  )
-                ],
-              )
-            ],
-          ),
+                    child:  Center(
+
+                      child: GestureDetector (
+                          onTap: () async {
+                            dynamic result = await _auth.signInWithGoogle();
+
+                          },
+                          child: Text("Google", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
+                    ),
+                  ),
+                )
+              ],
+            )
+          ],
         ),
       ),
 

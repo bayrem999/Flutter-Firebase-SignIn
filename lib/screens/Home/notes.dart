@@ -11,6 +11,8 @@ import '../Notes/NoteCard.dart';
 import 'package:sign_in/screens/Home/Settings.dart';
 import 'package:sign_in/Theme/theme.dart';
 
+import 'CustomDrawer.dart';
+
 class notes extends StatefulWidget {
   const notes({super.key});
 
@@ -37,12 +39,11 @@ class _notesState extends State<notes> {
 
   @override
   Widget build(BuildContext context) {
+    var appState = Provider.of<AppState>(context);
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor:  Colors.orangeAccent,
+
         title: Text(
 
           AppLocalizations.of(context)!.notes, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -50,6 +51,7 @@ class _notesState extends State<notes> {
           fontSize: Provider.of<AppState>(context).fontSize,
         ),),
       ),
+      drawer: customDrawer(appState.selectedIndex, selectedPlanet: null,),
       body: FutureBuilder<List<Note>>(
         future: _note.getNotesForCurrentUser(),
         builder: (context, snapshot) {

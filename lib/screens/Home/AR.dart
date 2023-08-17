@@ -61,12 +61,13 @@ class _ARState extends State<AR> {
   }
   @override
   Widget build(BuildContext context) {
-
+    var appState = Provider.of<AppState>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orangeAccent,
         title: Text(""),
       ),
+       drawer: customDrawer(appState.selectedIndex, selectedPlanet: null,),
       body: ArCoreView(
         onArCoreViewCreated: _onArViewCreated,
         enableTapRecognizer: true,
