@@ -64,6 +64,7 @@ dependencies:
   speech_to_text: ^6.3.0
   model_viewer_plus: ^1.6.1
   google_sign_in: ^6.1.4
+  material_design_icons_flutter: ^7.0.7296
 
 
 flutter_icons:
@@ -95,6 +96,8 @@ dev_dependencies:
 flutter:
   generate: true
   assets:
+    - assets/images/facebook.png
+    - assets/images/google.png
     - assets/images/user.png
     - assets/animations/loading-circles.json
     - assets/animations/access.json

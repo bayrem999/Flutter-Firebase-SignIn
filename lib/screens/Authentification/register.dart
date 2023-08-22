@@ -16,10 +16,12 @@ class _RegisterState extends State<Register> {
 
   final AuthService _auth = AuthService();
   final _formkey = GlobalKey<FormState>() ;
-
+  bool _isObscured = true;
+  bool _isObscured2 = true;
   String email = '';
   String password = '';
   String error = '';
+  String confirmPassword ='';
   @override
   Widget build(BuildContext context) {
     return /*Scaffold(
@@ -179,17 +181,24 @@ class _RegisterState extends State<Register> {
                                       ),
                                       child: Semantics(
                                         label: AppLocalizations.of(context)!.email ,
-                                        child: TextFormField(
-                                          decoration:  InputDecoration(
-                                              hintText: AppLocalizations.of(context)!.email,
-                                              hintStyle: const TextStyle(color: Colors.grey),
-                                              border: InputBorder.none
+                                        child:  TextFormField(
+                                          decoration: const InputDecoration(
+                                            hintText: "Email",
+                                            hintStyle: TextStyle(color: Colors.grey),
+                                            border: InputBorder.none,
                                           ),
-                                          validator: (val) => val!.isEmpty ? 'enter an email ' : null,
+                                          keyboardType: TextInputType.emailAddress,
+                                          validator: (val) {
+                                            if (val == null || val.isEmpty) {
+                                              return 'Please enter an email';
+                                            } else if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$').hasMatch(val)) {
+                                              return 'Please enter a valid email';
+                                            }
+                                            return null;
+                                          },
                                           onChanged: (val) {
                                             setState(() => email = val);
                                           },
-
                                         ),
                                       ),
                                     ),
@@ -201,19 +210,67 @@ class _RegisterState extends State<Register> {
                                       child: Semantics(
                                         label: AppLocalizations.of(context)!.password ,
                                         child: TextFormField(
-                                          decoration:  InputDecoration(
-                                              hintText: AppLocalizations.of(context)!.password,
-                                              hintStyle:const TextStyle(color: Colors.grey),
-                                              border: InputBorder.none
+                                          decoration: InputDecoration(
+                                            hintText: AppLocalizations.of(context)!.password,
+                                            hintStyle: const TextStyle(color: Colors.grey),
+                                            border: InputBorder.none,
+                                            suffixIcon: IconButton(
+                                              icon: Icon(
+                                                _isObscured ? Icons.visibility : Icons.visibility_off,
+                                                color: Theme.of(context).primaryColor,
+                                              ),
+                                              onPressed: () {
+                                                setState(() {
+                                                  _isObscured = !_isObscured;
+                                                });
+                                              },
+                                            ),
                                           ),
+                                          keyboardType: TextInputType.number,
                                           validator: (val) => val!.length < 6 ? 'password too short ' : null,
-                                          obscureText: true,
+                                          obscureText: _isObscured, // Use the obscured state here
                                           onChanged: (val) {
                                             setState(() => password = val);
                                           },
-
                                         ),
                                       ),
+                                    ),
+
+                                    Container(
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: const BoxDecoration(
+                                            border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
+                                        ),
+                                        child: Semantics(
+                                            label: AppLocalizations.of(context)!.password ,
+                                            child: TextFormField(decoration: InputDecoration(
+                                              hintText: AppLocalizations.of(context)!.password,
+                                              hintStyle: const TextStyle(color: Colors.grey),
+                                              border: InputBorder.none,
+                                              suffixIcon: IconButton(
+                                                icon: Icon(
+                                                  _isObscured2 ? Icons.visibility : Icons.visibility_off,
+                                                  color: Theme.of(context).primaryColor,
+                                                ),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _isObscured2 = !_isObscured2;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                              keyboardType: TextInputType.number,
+                                              validator: (val) {
+                                                if (val != password) {
+                                                  return 'Passwords do not match';
+                                                }
+                                                return null;
+                                              },
+                                              obscureText: _isObscured2,
+                                              onChanged: (val) {
+                                                setState(() => confirmPassword = val);
+                                              },)
+                                        ),
                                     ),
                                   ],
                                 ),
@@ -231,11 +288,11 @@ class _RegisterState extends State<Register> {
                                     color: Colors.orange[900]
                                 ),
                                 child: Center(
-                                  child: GestureDetector(
+                                  child: InkWell(
                                     onTap: () async {
                                       if (_formkey.currentState?.validate() == true)
                                       {
-                                        dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                                        dynamic result = await _auth.registerWithEmailAndPassword(context,email, password);
                                         if(result == null)
 
                                         {

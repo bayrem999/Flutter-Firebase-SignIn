@@ -1,6 +1,9 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print
 
+
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:sign_in/Models/User.dart';
@@ -9,6 +12,8 @@ class AuthService {
 
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
+
+
 
 Users? _userFromFireBaseUser(User? user) {
 
@@ -42,7 +47,14 @@ Users? _userFromFireBaseUser(User? user) {
 
 
 }
-  Future<UserCredential> signInWithGoogle() async {
+  Future<UserCredential> signInWithGoogle(BuildContext context) async {
+    showDialog(context: context, builder: (context)
+    {
+      return const Center(child: CircularProgressIndicator(
+        color: Colors.orangeAccent,
+        backgroundColor: Colors.blueGrey,
+      ));
+    },);
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -55,25 +67,36 @@ Users? _userFromFireBaseUser(User? user) {
       idToken: googleAuth?.idToken,
     );
 
+    Navigator.of(context).pop();
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   // sign_in with email and pwd
 
-  Future signinWithEmailAndPassword(String email , String password)async
+  Future signinWithEmailAndPassword(BuildContext context,String email , String password)async
   {
+    showDialog(context: context, builder: (context)
+    {
+      return const Center(child: CircularProgressIndicator(
+        color: Colors.orangeAccent,
+        backgroundColor: Colors.blueGrey,));
+    },);
     try{
       UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
+      Navigator.of(context).pop();
       return _userFromFireBaseUser(user);
+
     }
         catch(e)
         {
           print (e.toString());
+
           return null ;
 
         }
+
   }
 
 
@@ -91,11 +114,19 @@ Users? _userFromFireBaseUser(User? user) {
 
 
   // register with email and pwd
-  Future registerWithEmailAndPassword(String email , String password) async
+  Future registerWithEmailAndPassword(BuildContext context, email , String password) async
   {
+    showDialog(context: context, builder: (context)
+    {
+      return const Center(child: CircularProgressIndicator(
+        color: Colors.orangeAccent,
+        backgroundColor: Colors.blueGrey,
+      ));
+    },);
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
+      Navigator.pop(context);
       return _userFromFireBaseUser(user);
     }
     // ignore: avoid_print
@@ -107,9 +138,17 @@ Users? _userFromFireBaseUser(User? user) {
 
   // sign out
 
-  Future signOut() async {
+  Future signOut(BuildContext context) async {
+    showDialog(context: context, builder: (context)
+    {
+      return const Center(child: CircularProgressIndicator(
+        color: Colors.orangeAccent,
+        backgroundColor: Colors.blueGrey,));
+    },);
     try {
-      return await _auth.signOut();
+      await _auth.signOut();
+      Navigator.of(context).pop();
+      return null;
     } catch (error) {
       print(error.toString());
       return null;

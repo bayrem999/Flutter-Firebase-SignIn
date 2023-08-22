@@ -96,7 +96,7 @@ class _notesState extends State<notes> {
   Widget _buildAnimatedNoteItem(Note note, Animation<double> animation) {
     return SizeTransition(
       sizeFactor: animation,
-      child: NoteCard(title: note.title, content: note.content),
+      child: NoteCard(title: note.title, content: note.content, id: note.id,),
     );
   }
 
@@ -181,7 +181,7 @@ class _notesState extends State<notes> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       // Generate a unique ID for the note
-      String noteId = Uuid().v4();
+      String noteId = const Uuid().v4();
 
       // Create a new Note object
       Note newNote = Note(

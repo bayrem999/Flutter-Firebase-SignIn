@@ -4,6 +4,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sign_in/Models/User.dart';
 import 'package:sign_in/Services/auth.dart';
 import 'package:sign_in/l10n/l10n.dart';
+import 'package:sign_in/screens/Authentification/authenti.dart';
+import 'package:sign_in/screens/Authentification/sign_in.dart';
 import 'package:sign_in/screens/Home/AR.dart';
 import 'package:sign_in/screens/Home/AppState.dart';
 import 'package:sign_in/screens/Home/Settings.dart';
@@ -24,6 +26,7 @@ import 'package:sign_in/Models/Planets.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final authenti togg = authenti();
 
   await Firebase.initializeApp();
   // Initialization of Firebase app
@@ -35,7 +38,7 @@ void main() async {
 
         ChangeNotifierProvider<AppState>(
           create: (context) => AppState(),
-          child:  MyApp(),
+          child:  MyApp( ),
         ),
 
 
@@ -44,8 +47,10 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+
    MyApp({super.key});
   final stt.SpeechToText _speech = stt.SpeechToText();
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +92,7 @@ class MyApp extends StatelessWidget {
               '/ar': (context) =>    AR() ,
               '/setting': (context) => const SettingsPage(),
               '/notes' : (context)=> const notes(),
+              //'/sign_in': (context)=> SignIn(toggleView: toggleView )
             },
             home: const splach(),
           );
