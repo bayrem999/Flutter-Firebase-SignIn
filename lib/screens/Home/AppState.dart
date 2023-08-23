@@ -10,9 +10,18 @@ class AppState extends ChangeNotifier {
   bool _isHighContrastModeEnabled = false; // Set the initial value as needed
   bool get isHighContrastModeEnabled => _isHighContrastModeEnabled;
   bool _isColorBlindModeEnabled = false;
-  Locale _appLocale = Locale('en'); // Default app language
 
-  Locale get appLocale => _appLocale;
+
+  late Locale _locale;
+
+  Locale get locale => _locale;
+
+  void setlocal(Locale locale) {
+    _locale = locale;
+    notifyListeners();
+  }
+
+
    // Set a default font
 
   AppFont _selectedFont = AppFont.roboto;
@@ -24,10 +33,7 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setAppLanguage(Locale newLocale) {
-    _appLocale = newLocale;
-    notifyListeners();
-  }
+
 
 
 

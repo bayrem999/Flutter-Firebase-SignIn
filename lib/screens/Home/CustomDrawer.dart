@@ -144,6 +144,24 @@ class _customDrawerState extends State<customDrawer> {
                   selectedTileColor: Colors.orange.shade100,
                 ),
               ),
+              Semantics(
+                label: "images",
+                child: ListTile(
+                  leading: const Icon(Icons.image),
+                  title: Text("Images",style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+                      fontSize: Provider.of<AppState>(context).fontSize )),
+                  onTap: () {
+                    var appState = Provider.of<AppState>(context, listen: false);
+                    appState.selectedIndex = 4;
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/images');
+                  },
+                  selected: appState.selectedIndex == 4,
+                  selectedTileColor: Colors.orange.shade100,
+                ),
+
+              ),
 
               // Add more ListTile widgets as needed
               Semantics(
@@ -182,7 +200,8 @@ class _customDrawerState extends State<customDrawer> {
 
 
                 ),
-              )
+              ),
+
 
 
 

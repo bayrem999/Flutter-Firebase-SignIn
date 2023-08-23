@@ -21,25 +21,33 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  String _selectedLanguage = 'English';
+  String _selectedLanguage = 'French';
+
   bool _isHighContrastModeEnabled = false; // Set the initial value as needed
-
-
 
 
   @override
   Widget build(BuildContext context) {
     var appState = Provider.of<AppState>(context, listen: false);
+    var selectedLocale = Localizations.localeOf(context).toString();
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orangeAccent,
         title: Text(
           AppLocalizations.of(context)!.settings,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          style: Theme
+              .of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(
             fontFamily:
-            _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
-            fontSize: Provider.of<AppState>(context).fontSize,
+            _getFontFamilyFromAppFont(Provider
+                .of<AppState>(context)
+                .selectedFont),
+            fontSize: Provider
+                .of<AppState>(context)
+                .fontSize,
           ),
         ),
 
@@ -47,54 +55,101 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       drawer: customDrawer(appState.selectedIndex, selectedPlanet: null,),
       body: Semantics(
-        label:  AppLocalizations.of(context)!.settings,
+        label: AppLocalizations.of(context)!.settings,
+
 
         child: SettingsList(
           sections: [
             SettingsSection(
               title: Semantics(
-                label:  AppLocalizations.of(context)!.appearance,
+                label: AppLocalizations.of(context)!.appearance,
                 child: Text(
                   AppLocalizations.of(context)!.appearance,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(
                     fontFamily:
-                    _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
-                    fontSize: Provider.of<AppState>(context).fontSize,
+                    _getFontFamilyFromAppFont(Provider
+                        .of<AppState>(context)
+                        .selectedFont),
+                    fontSize: Provider
+                        .of<AppState>(context)
+                        .fontSize,
                   ),
                 ),
               ),
               tiles: [
+
                 SettingsTile.switchTile(
-                  initialValue: Provider.of<AppState>(context).isDarkModeEnabled,
+                  initialValue: Provider
+                      .of<AppState>(context)
+                      .isDarkModeEnabled,
                   title: Semantics(
                     label: AppLocalizations.of(context)!.darkMode,
                     child: Text(AppLocalizations.of(context)!.darkMode,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(
                         fontFamily:
-                        _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
-                        fontSize: Provider.of<AppState>(context).fontSize,
+                        _getFontFamilyFromAppFont(Provider
+                            .of<AppState>(context)
+                            .selectedFont),
+                        fontSize: Provider
+                            .of<AppState>(context)
+                            .fontSize,
                       ),
                     ),
                   ),
                   leading: const Icon(Icons.dark_mode),
                   activeSwitchColor: Colors.orange,
                   onToggle: (value) {
-                    Provider.of<AppState>(context, listen: false).isDarkModeEnabled = value;
+                    Provider
+                        .of<AppState>(context, listen: false)
+                        .isDarkModeEnabled = value;
                   },
                 ),
 
 
-               _buildFontSizeTile(context),
-                _buildFontFamilyTile(context,appState),
-
+                _buildFontSizeTile(context),
+                _buildFontFamilyTile(context, appState),
 
 
                 SettingsTile.switchTile(
-                  initialValue: Provider.of<AppState>(context).isColorBlindModeEnabled,
+                  initialValue: Provider
+                      .of<AppState>(context)
+                      .isColorBlindModeEnabled,
                   title: Text('Color Blind Mode'),
                   leading: Icon(Icons.color_lens),
                   onToggle: (value) {
-                    Provider.of<AppState>(context, listen: false).isColorBlindModeEnabled = value;
+                    Provider
+                        .of<AppState>(context, listen: false)
+                        .isColorBlindModeEnabled = value;
+                  },
+                ),
+                SettingsTile(
+                  title: Text('Language'),
+                  leading: Icon(Icons.language),
+                  onPressed: (context) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('Select Language'),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              _buildLanguageOption('French'),
+                              _buildLanguageOption('English'),
+                              // Add more language options here
+                            ],
+                          ),
+                        );
+                      },
+                    );
                   },
                 ),
 
@@ -102,21 +157,23 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
           ],
+
         ),
+
       ),
+
     );
   }
+
   SettingsTile _buildFontSizeTile(BuildContext context) {
     return SettingsTile(
-      title:  Text(AppLocalizations.of(context)!.fontSize),
+      title: Text(AppLocalizations.of(context)!.fontSize),
       leading: const Icon(Icons.text_fields),
       onPressed: _showFontSizeDialog,
     );
   }
 
   // change font
-
-
 
 
   String _getFontFamilyFromAppFont(AppFont appFont) {
@@ -145,20 +202,29 @@ class _SettingsPageState extends State<SettingsPage> {
     return SettingsTile(
       title: Semantics(
         label: 'Font Family', // You can localize this label if needed
-        child: Text('Font Family',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+        child: Text('Font Family', style: Theme
+            .of(context)
+            .textTheme
+            .bodyMedium
+            ?.copyWith(
           fontFamily:
-          _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
-          fontSize: Provider.of<AppState>(context).fontSize,
+          _getFontFamilyFromAppFont(Provider
+              .of<AppState>(context)
+              .selectedFont),
+          fontSize: Provider
+              .of<AppState>(context)
+              .fontSize,
         ),),
       ),
       description: Text(
         _getFontName(appState.selectedFont),
-        style: TextStyle(fontFamily: _getFontFamilyFromAppFont(appState.selectedFont)),
+        style: TextStyle(
+            fontFamily: _getFontFamilyFromAppFont(appState.selectedFont)),
       ),
       leading: Icon(Icons.font_download),
       onPressed: (_) {
         print('Current Font: ${appState.selectedFont}'); // Debug print
-        _showFontDialog(appState,context);
+        _showFontDialog(appState, context);
         setState(() {
           // Trigger a rebuild to apply font changes
         });
@@ -167,49 +233,65 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
 
-
   void _showFontDialog(AppState appState, BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Select Font Family',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontFamily:
-          _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
-          fontSize: Provider.of<AppState>(context).fontSize,
-        ),),
-        content: DropdownButton<AppFont>(
-          value: appState.selectedFont,
-          onChanged: (newFont) {
-            setState(() {
-              appState.changeFont(newFont!);
-            });
-            Navigator.pop(context);
-          },
-          items: AppFont.values.map((font) {
-            return DropdownMenuItem<AppFont>(
-              value: font,
-              child: Text(_getFontName(font)),
-            );
-          }).toList(),
-        ),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              print('Current Font: ${appState.selectedFont}'); // Debug print
-
-            },
-            child: Text('Cancel',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+      builder: (context) =>
+          AlertDialog(
+            title: Text('Select Font Family', style: Theme
+                .of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(
               fontFamily:
-              _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
-              fontSize: Provider.of<AppState>(context).fontSize,
+              _getFontFamilyFromAppFont(Provider
+                  .of<AppState>(context)
+                  .selectedFont),
+              fontSize: Provider
+                  .of<AppState>(context)
+                  .fontSize,
             ),),
+            content: DropdownButton<AppFont>(
+              value: appState.selectedFont,
+              onChanged: (newFont) {
+                setState(() {
+                  appState.changeFont(newFont!);
+                });
+                Navigator.pop(context);
+              },
+              items: AppFont.values.map((font) {
+                return DropdownMenuItem<AppFont>(
+                  value: font,
+                  child: Text(_getFontName(font)),
+                );
+              }).toList(),
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  print(
+                      'Current Font: ${appState.selectedFont}'); // Debug print
+
+                },
+                child: Text('Cancel', style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(
+                  fontFamily:
+                  _getFontFamilyFromAppFont(Provider
+                      .of<AppState>(context)
+                      .selectedFont),
+                  fontSize: Provider
+                      .of<AppState>(context)
+                      .fontSize,
+                ),),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
-
 
 
 // end change font
@@ -218,20 +300,33 @@ class _SettingsPageState extends State<SettingsPage> {
     showDialog(
       context: context,
       builder: (context) {
-        double newFontSize = Provider.of<AppState>(context, listen: false).fontSize;
+        double newFontSize = Provider
+            .of<AppState>(context, listen: false)
+            .fontSize;
 
         return Semantics(
           label: 'Choose Font Size Dialog',
           child: AlertDialog(
-            title:  Text('Choose Font Size',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            title: Text('Choose Font Size', style: Theme
+                .of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(
               fontFamily:
-              _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
-              fontSize: Provider.of<AppState>(context).fontSize,
+              _getFontFamilyFromAppFont(Provider
+                  .of<AppState>(context)
+                  .selectedFont),
+              fontSize: Provider
+                  .of<AppState>(context)
+                  .fontSize,
             ),),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            contentPadding: const EdgeInsets.symmetric(
+                horizontal: 20.0, vertical: 10.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
             content: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(), // Add this line to make the content scrollable
+              physics: const ClampingScrollPhysics(),
+              // Add this line to make the content scrollable
               child: ListBody(
                 children: [
                   Semantics(
@@ -241,7 +336,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       min: 10.0,
                       max: 30.0,
                       onChanged: (value) {
-                        Provider.of<AppState>(context, listen: false).fontSize = value;
+                        Provider
+                            .of<AppState>(context, listen: false)
+                            .fontSize = value;
                         newFontSize = value;
                       },
                     ),
@@ -251,28 +348,44 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             actions: <Widget>[
               Semantics(
-                label : 'Cancel button',
+                label: 'Cancel button',
                 child: TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child:  Text('Cancel',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  child: Text('Cancel', style: Theme
+                      .of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(
                     fontFamily:
-                    _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
-                    fontSize: Provider.of<AppState>(context).fontSize,
+                    _getFontFamilyFromAppFont(Provider
+                        .of<AppState>(context)
+                        .selectedFont),
+                    fontSize: Provider
+                        .of<AppState>(context)
+                        .fontSize,
                   ),),
                 ),
               ),
               Semantics(
-                label : 'Save button',
+                label: 'Save button',
                 child: TextButton(
                   onPressed: () {
                     // Save the new font size in preferences or wherever you want to persist it.
                     // Then close the dialog.
                     Navigator.pop(context);
                   },
-                  child:  Text('Save',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  child: Text('Save', style: Theme
+                      .of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(
                     fontFamily:
-                    _getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
-                    fontSize: Provider.of<AppState>(context).fontSize,
+                    _getFontFamilyFromAppFont(Provider
+                        .of<AppState>(context)
+                        .selectedFont),
+                    fontSize: Provider
+                        .of<AppState>(context)
+                        .fontSize,
                   ),),
                 ),
               ),
@@ -282,51 +395,33 @@ class _SettingsPageState extends State<SettingsPage> {
       },
     );
   }
-  /*void _showLanguagePickerDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Select Language'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _buildLanguageOption('English'),
-              _buildLanguageOption('French'),
-              // Add more language options here
-            ],
-          ),
-        );
-      },
-    );
-  }*/
 
-  /*Widget _buildLanguageOption(String language) {
-    bool isSelected = _selectedLanguage == language;
-    return RadioListTile(
-      value: language,
-      groupValue: _selectedLanguage,
-      title: Text(language),
-      onChanged: (value) {
-        setState(() {
-          _selectedLanguage = value as String;
-          // Implement language change logic here
-          final appState = Provider.of<AppState>(context, listen: false);
-
-          // Update the app's locale
-          appState.(Locale(_selectedLanguage));
-
-          // Close the dialog after selection
-          Navigator.pop(context);
-        });
-      },
-      selected: isSelected,
-    );
-  }*/
 
   void toggleHighContrastMode() {
     setState(() {
       _isHighContrastModeEnabled = !_isHighContrastModeEnabled;
     });
   }
+  Widget _buildLanguageOption(String language) {
+
+    final appState = Provider.of<AppState>(context, listen: false);
+    return RadioListTile<Locale>(
+      value: Locale(language),
+      groupValue: appState.locale,
+      title: Text(language),
+      onChanged: (value) {
+
+        String? codes = value!.countryCode;
+        Locale selectedLocale = Locale(codes![0], codes![1]); // Create a Locale instance
+
+        appState.setlocal(selectedLocale); // Pass the selected Locale
+        Navigator.pop(context); // Close the dialog after selection
+      },
+      selected: appState.locale == Locale(language),
+    );
+  }
+
+
+
+
 }

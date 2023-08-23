@@ -10,6 +10,7 @@ import 'package:sign_in/screens/Home/AR.dart';
 import 'package:sign_in/screens/Home/AppState.dart';
 import 'package:sign_in/screens/Home/Settings.dart';
 import 'package:sign_in/screens/Home/home_screen.dart';
+import 'package:sign_in/screens/Home/image.dart';
 import 'package:sign_in/screens/Home/notes.dart';
 import 'package:sign_in/screens/splach_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -71,12 +72,16 @@ class MyApp extends StatelessWidget {
 
 
             debugShowCheckedModeBanner: false,
+
             supportedLocales: const [
-              Locale('en', ''), // English, empty locale
-              Locale('fr', ''), // French, empty locale
+              Locale('en', 'English'), // English, empty locale
+              Locale('fr', 'French'), // French, empty locale
               // Add more supported locales as needed
             ],
+
+
             localizationsDelegates: const [
+
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
@@ -92,6 +97,7 @@ class MyApp extends StatelessWidget {
               '/ar': (context) =>    AR() ,
               '/setting': (context) => const SettingsPage(),
               '/notes' : (context)=> const notes(),
+              '/images' : (context)=> ImageWithDescription(),
               //'/sign_in': (context)=> SignIn(toggleView: toggleView )
             },
             home: const splach(),
