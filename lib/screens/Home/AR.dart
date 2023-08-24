@@ -23,7 +23,7 @@ class AR extends StatefulWidget {
 
 class _ARState extends State<AR> {
   late ArCoreController arCoreController;
-  late  Planet defaultPlanet = Planet(name: 'Earth', modelPath: 'assets/3d_objects/earth.glb');
+
 
 
   @override
@@ -40,25 +40,29 @@ class _ARState extends State<AR> {
 
   }
 
-  displayearthmap (ArCoreController controller ) async {
+  displayearthmap(ArCoreController controller) async {
+    final ByteData earthTextureBytes = await rootBundle.load("assets/3d_objects/earth.glb");
 
-    final ByteData  earthtexturebytes = await rootBundle.load("assets/3d_objects/earth_map.jpg");
+    // Print the length of the loaded texture bytes
+    print("***************************************Texture Byte Length: ${earthTextureBytes.lengthInBytes}");
+
+
     final materials = ArCoreMaterial(
       color: Colors.blue ,
-      textureBytes: earthtexturebytes.buffer.asUint8List() ,
-
+      textureBytes: earthTextureBytes.buffer.asUint8List(),
     );
-    final sphere = ArCoreSphere(materials: [materials],
 
+    final sphere = ArCoreSphere(
+      materials: [materials],
     );
 
     final node = ArCoreNode(
-
-      shape:sphere,
-      position: vector64.Vector3(1,0, -1.5),
+      shape: sphere,
+      position: vector64.Vector3(0, 0, 1.5),
     );
     arCoreController.addArCoreNode(node);
   }
+
   @override
   Widget build(BuildContext context) {
     var appState = Provider.of<AppState>(context);
@@ -76,47 +80,12 @@ class _ARState extends State<AR> {
     );
   }
 
-  void _onArCoreViewCreated(ArCoreController controller) {
-    arCoreController = controller;
-
-
-  }
-
-
-}
-
-
-/*void _onArCoreViewCreated(ArCoreController controller){
-arCoreController = controller;
-_loadPlanetModel();
-_buildPlanetButton('earth');
 
 
 
 }
 
-  void _loadPlanetModel() async {
-    final planetNode = ArCoreReferenceNode(
-      objectUrl: widget.planet.modelPath,
-      scale: widget.planet.scale != null ? Vector3(1, 1, 1) : null,
-      position: widget.planet.scale != null ? Vector3(0, 0, -1.5) : null,
-      rotation: widget.planet.scale != null ? Vector4(0, 1, 0, 0) : null,
-    );
 
-    arCoreController?.addArCoreNode(planetNode);
-  }
-
-
-  Widget _buildPlanetButton(String planet) {
-    return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          selectedPlanet = planet;
-        });
-      },
-      child: Text(planet),
-    );
-  }*/
 
 
 

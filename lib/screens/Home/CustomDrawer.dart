@@ -194,6 +194,7 @@ class _customDrawerState extends State<customDrawer> {
                     // If the user confirmed, log out
                     if (confirmLogout == true) {
                       await _auth.signOut(context);
+                      Navigator.pop(context);
 
                     }
                   },

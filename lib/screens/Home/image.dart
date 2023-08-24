@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:provider/provider.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import 'AppState.dart';
 import 'CustomDrawer.dart';
 
@@ -27,6 +27,7 @@ class _ImageWithDescriptionState extends State<ImageWithDescription> {
   }
 
   Future<void> fetchImages() async {
+
     try {
       // Fetch image data from Firestore collection
       QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('Images').get();
@@ -53,14 +54,18 @@ class _ImageWithDescriptionState extends State<ImageWithDescription> {
     var appState = Provider.of<AppState>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  Colors.orangeAccent,
-
+        backgroundColor: Colors.orangeAccent,
         title: Text('Images with Descriptions'),
       ),
       drawer: customDrawer(appState.selectedIndex, selectedPlanet: null,),
-      body: ListView.builder(
+      body: imagesList.isEmpty
+          ? const Center(
+        child:  CircularProgressIndicator(color: Colors.orangeAccent,
+          backgroundColor: Colors.blueGrey,),
+      )
+          :CarouselSlider.builder(
         itemCount: imagesList.length,
-        itemBuilder: (context, index) {
+        itemBuilder: (context, index, realIndex) {
           final imageUrl = imagesList[index]['imageUrl'];
           final description = imagesList[index]['description'];
 
@@ -72,6 +77,18 @@ class _ImageWithDescriptionState extends State<ImageWithDescription> {
             ),
           );
         },
+        options: CarouselOptions(
+          height: 400, // Adjust the height as needed
+          viewportFraction: 0.8,
+          initialPage: 0,
+          enableInfiniteScroll: true,
+          reverse: false,
+          autoPlay: true,
+          autoPlayInterval: Duration(seconds: 3),
+          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enlargeCenterPage: true,
+        ),
       ),
     );
   }

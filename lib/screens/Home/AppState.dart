@@ -12,12 +12,12 @@ class AppState extends ChangeNotifier {
   bool _isColorBlindModeEnabled = false;
 
 
-  late Locale _locale;
+  Locale _appLocale = Locale('en'); // Default language
 
-  Locale get locale => _locale;
+  Locale get appLocale => _appLocale;
 
-  void setlocal(Locale locale) {
-    _locale = locale;
+  void changeLanguage(Locale newLocale) {
+    _appLocale = newLocale;
     notifyListeners();
   }
 

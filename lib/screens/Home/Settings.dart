@@ -131,27 +131,17 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                 ),
                 SettingsTile(
-                  title: Text('Language'),
                   leading: Icon(Icons.language),
-                  onPressed: (context) {
+                  title: Text('Change Language'),
+                  onPressed: (_) {
                     showDialog(
                       context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text('Select Language'),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              _buildLanguageOption('French'),
-                              _buildLanguageOption('English'),
-                              // Add more language options here
-                            ],
-                          ),
-                        );
-                      },
+                      builder: (context) => _buildLanguageDialog(context),
                     );
                   },
                 ),
+
+
 
 
               ],
@@ -402,26 +392,56 @@ class _SettingsPageState extends State<SettingsPage> {
       _isHighContrastModeEnabled = !_isHighContrastModeEnabled;
     });
   }
-  Widget _buildLanguageOption(String language) {
 
-    final appState = Provider.of<AppState>(context, listen: false);
-    return RadioListTile<Locale>(
-      value: Locale(language),
-      groupValue: appState.locale,
-      title: Text(language),
-      onChanged: (value) {
+  Widget _buildLanguageDialog(BuildContext context) {
+    final languageProvider = Provider.of<AppState>(context, listen: false);
 
-        String? codes = value!.countryCode;
-        Locale selectedLocale = Locale(codes![0], codes![1]); // Create a Locale instance
-
-        appState.setlocal(selectedLocale); // Pass the selected Locale
-        Navigator.pop(context); // Close the dialog after selection
-      },
-      selected: appState.locale == Locale(language),
+    return AlertDialog(
+      title: Text('Select Language'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildLanguageOption(context, 'English', Locale('en')),
+          _buildLanguageOption(context, 'French', Locale('fr')),
+        ],
+      ),
     );
   }
 
+  ListTile _buildLanguageOption(BuildContext context, String label, Locale locale) {
+    final languageProvider = Provider.of<AppState>(context, listen: false);
+    return ListTile(
+      title: Text(label),
+      onTap: () {
+        // Change the language
+        languageProvider.changeLanguage(locale);
 
-
+        // Show confirmation dialog
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Language Changed'),
+            content: Text('Language changed to $label. Do you want to save this choice?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  // Save the language choice
+                  // You can save it using shared preferences or any other method
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: Text('Save'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
 }

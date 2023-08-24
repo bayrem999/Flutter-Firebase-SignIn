@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Planet defaultPlanet = Planet(name: 'Earth', modelPath: 'assets/3d_objects/earth.glb');
+
     final appState = Provider.of<AppState>(context);
 
 
@@ -72,10 +72,10 @@ class MyApp extends StatelessWidget {
 
 
             debugShowCheckedModeBanner: false,
-
+            locale: appState.appLocale,
             supportedLocales: const [
-              Locale('en', 'English'), // English, empty locale
-              Locale('fr', 'French'), // French, empty locale
+              Locale('en', 'US'), // English, empty locale
+              Locale('fr', 'FR'), // French, empty locale
               // Add more supported locales as needed
             ],
 
