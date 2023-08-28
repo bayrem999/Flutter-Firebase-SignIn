@@ -7,6 +7,7 @@ import 'package:sign_in/l10n/l10n.dart';
 import 'package:sign_in/screens/Authentification/authenti.dart';
 import 'package:sign_in/screens/Authentification/sign_in.dart';
 import 'package:sign_in/screens/Home/AR.dart';
+import 'package:sign_in/screens/Home/Annuaire.dart';
 import 'package:sign_in/screens/Home/AppState.dart';
 import 'package:sign_in/screens/Home/Settings.dart';
 import 'package:sign_in/screens/Home/home_screen.dart';
@@ -98,6 +99,7 @@ class MyApp extends StatelessWidget {
               '/setting': (context) => const SettingsPage(),
               '/notes' : (context)=> const notes(),
               '/images' : (context)=> ImageWithDescription(),
+              '/annuaire' :(context)=>Annuaire(),
               //'/sign_in': (context)=> SignIn(toggleView: toggleView )
             },
             home: const splach(),

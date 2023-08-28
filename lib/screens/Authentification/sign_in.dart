@@ -26,121 +26,7 @@ class _SignInState extends State<SignIn> {
   String error = '';
   @override
   Widget build(BuildContext context) {
-    return /*Scaffold(
-      backgroundColor: Colors.blueGrey[100],
-      appBar: AppBar(
-
-        backgroundColor: Colors.blueGrey[400],
-        elevation: 0.0,
-        title: const Text('Sign in '),
-        actions: <Widget>[
-          TextButton.icon(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            ),
-            icon: Icon(Icons.person),
-            label: Text('Register'),
-            onPressed: ()  {
-              widget.toggleView();
-
-            },
-          ),
-        ],
-      ),
-      body: Container(
-
-        width: double.infinity,
-        decoration: const BoxDecoration(
-            gradient:  LinearGradient(
-                begin: Alignment.topCenter,
-                colors: [
-                  Color(0xFFFFA500), Color(0xFFFF8C00), Color(0xFFFF7F00)
-                ]
-            )
-        ),
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-        child: Column(
-          
-
-          children: [
-
-
-            Form(
-              key: _formkey,
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 20.0),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter an email',
-                    ),
-                    validator: (val) => val!.isEmpty ? 'enter an email ' : null,
-                    onChanged: (val) {
-                      setState(() => email = val);
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter a password',
-                    ),
-                    validator: (val) => val!.length < 6 ? 'password too short ' : null,
-                    obscureText: true,
-                    onChanged: (val) {
-                      setState(() => password = val);
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-
-                  GestureDetector(
-                      onTap: (){
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context)
-                            {
-                              return ForgotPass();
-                            }),);
-
-                      },
-                      child: Text(" Forgot password ? " , style:TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,) ,)),
-
-                  ElevatedButton(
-
-                      child: Text(
-                        'Sign In',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () async {
-                        if (_formkey.currentState?.validate() == true)
-                        {
-                          dynamic result = await _auth.signinWithEmailAndPassword(email, password);
-
-                          if(result == null)
-
-                          {
-                            setState(() => error = 'Wrong credentials ' );
-
-                          }
-
-                        }
-
-                      }
-                  ),
-
-
-                  SizedBox(height: 12.0),
-                  Text(
-                    error,
-                    style: TextStyle(color: Colors.red, fontSize: 14.0),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );*/
+    return
 
       Scaffold(
         body: Container(
@@ -263,7 +149,7 @@ class _SignInState extends State<SignIn> {
                     error,
                     style: TextStyle(color: Colors.red),
                   ),
-                      const SizedBox(height: 40,),
+                      const SizedBox(height: 10,),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -318,7 +204,12 @@ class _SignInState extends State<SignIn> {
                         children: <Widget>[
                           Expanded(
                             child:  Center(
+                              child: GestureDetector(
+                                onTap: () async {
+                                  dynamic result = await _auth.signInWithFacebook();
+                                },
                                 child: Image.asset('assets/images/facebook.png', width: 30, height: 30),
+                            ),
                             ),
                           ),
                           const SizedBox(width: 30,),

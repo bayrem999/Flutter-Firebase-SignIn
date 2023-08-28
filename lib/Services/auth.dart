@@ -2,10 +2,11 @@
 
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:sign_in/Models/User.dart';
 
 class AuthService {
@@ -17,7 +18,7 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 
 Users? _userFromFireBaseUser(User? user) {
 
-  return user != null ? Users(uid: user.uid): null ;
+  return user != null ? Users(uid: user.uid, email: user.email, name: 'df', lastname: '', phonenumber: user.phoneNumber): null ;
 
 }
 
@@ -72,6 +73,19 @@ Users? _userFromFireBaseUser(User? user) {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
+  // sign in with facebook
+
+  Future<UserCredential> signInWithFacebook() async {
+    // Trigger the sign-in flow
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+
+    // Create a credential from the access token
+    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+    // Once signed in, return the UserCredential
+    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+  }
+
   // sign_in with email and pwd
 
   Future signinWithEmailAndPassword(BuildContext context,String email , String password)async
@@ -114,7 +128,7 @@ Users? _userFromFireBaseUser(User? user) {
 
 
   // register with email and pwd
-  Future registerWithEmailAndPassword(BuildContext context, email , String password) async
+  Future registerWithEmailAndPassword(BuildContext context, email , String password,String phonenumber) async
   {
     showDialog(context: context, builder: (context)
     {
@@ -125,8 +139,14 @@ Users? _userFromFireBaseUser(User? user) {
     },);
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      await FirebaseFirestore.instance.collection('users').doc(result.user!.uid).set({
+        
+        'email': email,
+        'phonenumber':phonenumber,
+        // Add other user data fields as needed
+      });
       User? user = result.user;
-      Navigator.pop(context);
+      Navigator.of(context).pop();
       return _userFromFireBaseUser(user);
     }
     // ignore: avoid_print

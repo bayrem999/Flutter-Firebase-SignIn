@@ -162,6 +162,24 @@ class _customDrawerState extends State<customDrawer> {
                 ),
 
               ),
+              Semantics(
+                label: "annuaire",
+                child: ListTile(
+                  leading: const Icon(Icons.group),
+                  title: Text("Annuaire",style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+                      fontSize: Provider.of<AppState>(context).fontSize )),
+                  onTap: () {
+                    var appState = Provider.of<AppState>(context, listen: false);
+                    appState.selectedIndex = 5;
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/annuaire');
+                  },
+                  selected: appState.selectedIndex == 5,
+                  selectedTileColor: Colors.orange.shade100,
+                ),
+
+              ),
 
               // Add more ListTile widgets as needed
               Semantics(
@@ -194,9 +212,11 @@ class _customDrawerState extends State<customDrawer> {
                     // If the user confirmed, log out
                     if (confirmLogout == true) {
                       await _auth.signOut(context);
-                      Navigator.pop(context);
+                      Navigator.of(context).pop();
+
 
                     }
+
                   },
 
 

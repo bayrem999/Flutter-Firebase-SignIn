@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_field/phone_number.dart';
 import 'package:sign_in/Services/auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -20,96 +22,16 @@ class _RegisterState extends State<Register> {
   bool _isObscured2 = true;
   String email = '';
   String password = '';
+  String nom ='';
+  String phonenumber ='';
   String error = '';
   String confirmPassword ='';
+  final TextEditingController phoneNumberController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return /*Scaffold(
-        backgroundColor: Colors.blueGrey[100],
-      appBar: AppBar(
-        backgroundColor: Colors.blueGrey[400],
-        elevation: 0.0,
-        title: Text('Sign up '),
-        actions: <Widget>[
-          TextButton.icon(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            ),
-            icon: Icon(Icons.person),
-            label: Text('Sign In'),
-            onPressed: ()  {
-              widget.toggleView();
-
-            },
-          ),
-        ],
-      ),
-    body: Container(
-    padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-    child: Form(
-      key: _formkey,
-    child: Column(
-    children: <Widget>[
-    SizedBox(height: 20.0),
-    TextFormField(
-      decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        hintText: 'Enter an email',
-      ),
-      validator: (val) => val!.isEmpty ? 'Enter an email ' : null,
-    onChanged: (val) {
-    setState(() => email = val);
-    },
-    ),
-    SizedBox(height: 20.0),
-    TextFormField(
-      decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        hintText: 'Enter a password',
-      ),
-    obscureText: true,
-    validator: (val) => val!.length < 6 ? 'password too short ' : null,
-    onChanged: (val) {
-    setState(() => password = val);
-    },
-    ),
-    SizedBox(height: 20.0),
-    ElevatedButton(
-
-
-    child: Text(
-    'Register',
-    style: TextStyle(color: Colors.white),
-    ),
-    onPressed: () async {
-    if (_formkey.currentState?.validate() == true)
-    {
-        dynamic result = await _auth.registerWithEmailAndPassword(email, password);
-        if(result == null)
-
-        {
-          setState(() => error = 'Please enter a valid email ' );
-
-        }
-
-    }
-    }
-    ),
-      SizedBox(height: 12.0),
-      Text(
-        error,
-        style: TextStyle(color: Colors.red, fontSize: 14.0),
-      ),
-    ],
-    ),
-    ),
-    ),
-    );*/
-
+    return
     // Ui Update
-
-
-
 
       Scaffold(
 
@@ -127,7 +49,7 @@ class _RegisterState extends State<Register> {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const SizedBox(height: 80,),
+                const SizedBox(height: 20,),
                 const Padding(
                   padding: EdgeInsets.all(20),
 
@@ -135,7 +57,7 @@ class _RegisterState extends State<Register> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Register", style: TextStyle(color: Colors.white, fontSize: 40),),
+                      Text("Register", style: TextStyle(color: Colors.white, fontSize: 30),),
 
 
                     ],
@@ -145,7 +67,7 @@ class _RegisterState extends State<Register> {
 
 
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Expanded(
                   child: Container(
                     decoration: const BoxDecoration(
@@ -154,12 +76,12 @@ class _RegisterState extends State<Register> {
                     ),
 
 
-                    child: SingleChildScrollView(
+                    child: Container(
                       child: Padding(
                         padding: const EdgeInsets.all(30),
                         child: Column(
                           children: <Widget>[
-                            const SizedBox(height: 60,),
+                            const SizedBox(height: 30,),
                             Container(
                               decoration: BoxDecoration(
                                   color: Colors.white,
@@ -174,6 +96,7 @@ class _RegisterState extends State<Register> {
                                 key: _formkey,
                                 child: Column(
                                   children: <Widget>[
+
                                     Container(
                                       padding: const EdgeInsets.all(10),
                                       decoration: const BoxDecoration(
@@ -202,6 +125,42 @@ class _RegisterState extends State<Register> {
                                         ),
                                       ),
                                     ),
+
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: const BoxDecoration(
+                                        border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE))),
+                                      ),
+                                      child: Semantics(
+                                        label: 'phonenumber',
+                                        child: IntlPhoneField(
+                                          decoration: InputDecoration(
+                                            hintText: 'Phone number',
+                                            hintStyle: TextStyle(color: Colors.grey),
+                                            border: InputBorder.none,
+                                          ),
+                                          initialCountryCode: 'TN',
+                                          controller: phoneNumberController,
+                                          onChanged: (PhoneNumber phone) {
+                                            setState(() {
+                                              // Convert the PhoneNumber object to a formatted string
+                                              phonenumber = '${phone.countryCode}${phone.number}';
+                                            });
+                                          },
+                                          validator: (PhoneNumber? phone) {
+                                            if (phone == null || !phone.isValidNumber()) {
+                                              return 'Please enter a valid phone number';
+                                            }
+                                            return null; // Phone number is valid
+                                          },
+                                        ),
+                                      ),
+                                    ),
+
+
+
+
+
                                     Container(
                                       padding: const EdgeInsets.all(10),
                                       decoration: const BoxDecoration(
@@ -277,7 +236,7 @@ class _RegisterState extends State<Register> {
                               ),
                             ),
 
-                            const SizedBox(height: 40,),
+                            const SizedBox(height: 30,),
                             Semantics(
                               label: AppLocalizations.of(context)!.signUp ,
                               child: Container(
@@ -292,7 +251,7 @@ class _RegisterState extends State<Register> {
                                     onTap: () async {
                                       if (_formkey.currentState?.validate() == true)
                                       {
-                                        dynamic result = await _auth.registerWithEmailAndPassword(context,email, password);
+                                        dynamic result = await _auth.registerWithEmailAndPassword(context,email, password,phonenumber);
                                         if(result == null)
 
                                         {
@@ -317,7 +276,7 @@ class _RegisterState extends State<Register> {
                             ),
 
 
-                            const SizedBox(height: 30,),
+                            //const SizedBox(height: 20,),
 
 
                           ],
