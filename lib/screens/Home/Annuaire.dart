@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../Models/User.dart';
 import 'AppState.dart';
 import 'CustomDrawer.dart';
+import 'UserDetailsScreen.dart';
 
 
 
@@ -30,7 +31,7 @@ class _AnnuaireState extends State<Annuaire> {
 
     // Convert Firestore data into List<Users>
     List<Users> users = usersSnapshot.docs.map((doc) {
-      return Users(uid: doc['uid'], email: doc['email'], name: doc['name'], lastname: doc['LastName'], phonenumber: doc['phonenumber'],);
+      return Users(uid: doc['uid'], email: doc['email'], fullName: doc['fullName'],  phonenumber: doc['phonenumber'],location: doc['location']);
     }).toList();
 
     return users;
@@ -85,45 +86,25 @@ class _AnnuaireState extends State<Annuaire> {
                     side: BorderSide(color: Colors.grey.shade300),
                   ),
                   child: ListTile(
-                    title: Text(user.name ?? 'No Name'),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(user.email!),
-                        SizedBox(height: 4),
-                        InkWell(
-                          onTap: () {
-                            if (user.phonenumber != null) {
-                                launch('tel:${user.phonenumber}');
-                              //launchUrl('tel:${Uri.encodeComponent(user.phonenumber!)}' ); // Use 'tel:' scheme for phone call
-                            } //await launchUrl(emailUri.resolveUri(emailUri));
-
-                          },
-                          child: Text(
-                            user.phonenumber ?? 'No Phone Number',
-                            style: TextStyle(
-                              color: user.phonenumber != null ? Colors.blue : Colors.grey,
-                              decoration: user.phonenumber != null
-                                  ? TextDecoration.underline
-                                  : TextDecoration.none,
-                            ),
-                          ),
-                        ),
-                      ],
+                    leading: CircleAvatar(
+                      //backgroundImage: NetworkImage(user.profileImageUrl ?? 'fallback_image_url'),
                     ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.mail),
-                      onPressed: () => _sendEmail(user.email!),
-                    ),
+                    title: Text(user.fullName ?? 'No Name'),
+                    onTap: () {
+                      // Navigate to a detailed user profile screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => UserDetailsScreen(user: user)),
+                      );
+                    },
                   ),
                 );
               },
             );
-
-
           }
         },
       ),
+
     );
   }
 }

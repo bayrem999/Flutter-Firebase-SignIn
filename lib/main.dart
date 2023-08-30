@@ -13,6 +13,7 @@ import 'package:sign_in/screens/Home/Settings.dart';
 import 'package:sign_in/screens/Home/home_screen.dart';
 import 'package:sign_in/screens/Home/image.dart';
 import 'package:sign_in/screens/Home/notes.dart';
+import 'package:sign_in/screens/Home/video.dart';
 import 'package:sign_in/screens/splach_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -95,7 +96,7 @@ class MyApp extends StatelessWidget {
 
             routes: {
               '/home': (context) => const home(),
-              '/ar': (context) =>    AR() ,
+              '/video': (context) =>    VideoPlayerScreen() ,
               '/setting': (context) => const SettingsPage(),
               '/notes' : (context)=> const notes(),
               '/images' : (context)=> ImageWithDescription(),

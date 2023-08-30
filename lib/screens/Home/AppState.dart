@@ -10,6 +10,14 @@ class AppState extends ChangeNotifier {
   bool _isHighContrastModeEnabled = false; // Set the initial value as needed
   bool get isHighContrastModeEnabled => _isHighContrastModeEnabled;
   bool _isColorBlindModeEnabled = false;
+  bool isReadAloudEnabled = true;
+
+
+
+  void toggleReadAloud(bool newValue) {
+    isReadAloudEnabled = newValue;
+    notifyListeners(); // Notify listeners of the state change
+  }
 
 
   Locale _appLocale = Locale('en'); // Default language

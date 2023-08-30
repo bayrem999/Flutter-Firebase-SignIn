@@ -94,7 +94,7 @@ class _customDrawerState extends State<customDrawer> {
           Semantics(
             label:  AppLocalizations.of(context)!.arExperience,
             child: ListTile(
-              leading: const Icon(Icons.camera),
+              leading: const Icon(Icons.video_collection_outlined),
               title: Text(AppLocalizations.of(context)!.arExperience,  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
                   fontSize: Provider.of<AppState>(context).fontSize ),),
@@ -102,7 +102,7 @@ class _customDrawerState extends State<customDrawer> {
                 var appState = Provider.of<AppState>(context, listen: false);
                 appState.selectedIndex = 1;
                 Navigator.pop(context);
-                Navigator.pushNamed(context, '/ar'); // Navigate to the AR screen
+                Navigator.pushNamed(context, '/video'); // Navigate to the AR screen
               },
               selected: appState.selectedIndex == 1,
               selectedTileColor: Colors.orange.shade100,

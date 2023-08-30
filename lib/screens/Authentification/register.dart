@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:sign_in/Services/auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
+
 
 class Register extends StatefulWidget {
 
@@ -26,7 +30,23 @@ class _RegisterState extends State<Register> {
   String phonenumber ='';
   String error = '';
   String confirmPassword ='';
+  String fullName = '';
+  FileImage? _selectedImage;
+
   final TextEditingController phoneNumberController = TextEditingController();
+
+  bool isValidImageUrl(String url) {
+    return url.isNotEmpty && (url.startsWith('http://') || url.startsWith('https://'));
+  }
+
+  Future<void> _pickImage() async {
+    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      setState(() {
+        _selectedImage = FileImage(pickedImage.path as File);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +96,7 @@ class _RegisterState extends State<Register> {
                     ),
 
 
-                    child: Container(
+                    child: SingleChildScrollView(
                       child: Padding(
                         padding: const EdgeInsets.all(30),
                         child: Column(
@@ -96,6 +116,36 @@ class _RegisterState extends State<Register> {
                                 key: _formkey,
                                 child: Column(
                                   children: <Widget>[
+
+
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: const BoxDecoration(
+                                        border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE))),
+                                      ),
+                                      child: Semantics(
+                                        label: 'Full Name', // Replace with your desired label
+                                        child: TextFormField(
+                                          decoration: const InputDecoration(
+                                            hintText: "Full Name",
+                                            hintStyle: TextStyle(color: Colors.grey),
+                                            border: InputBorder.none,
+                                          ),
+                                          validator: (val) {
+                                            if (val == null || val.isEmpty) {
+                                              return 'Please enter a full name';
+                                            } else if (val.length < 4) {
+                                              return 'Full name must be at least 4 characters long';
+                                            }
+                                            return null;
+                                          },
+                                          onChanged: (val) {
+                                            setState(() => fullName = val);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+
 
                                     Container(
                                       padding: const EdgeInsets.all(10),
@@ -158,7 +208,54 @@ class _RegisterState extends State<Register> {
                                     ),
 
 
+/*
+                                    GestureDetector(
+                                      onTap: _pickImage,
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: const BoxDecoration(
+                                          border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE))),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.image),
+                                            const SizedBox(width: 10),
+                                            Text(
+                                              'Select Profile Image',
+                                              style: TextStyle(
+                                                color: Colors.blue,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
 
+                                    SizedBox(height: 20),
+
+                                    _selectedImage != null
+                                        ? ClipOval(
+                                      child: Image.file(
+                                        _selectedImage! as File,
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                        : Container(
+                                      width: 100,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.grey),
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      child: Icon(
+                                        Icons.person,
+                                        size: 50,
+                                        color: Colors.grey,
+                                      ),
+                                    ),*/
 
 
                                     Container(
@@ -251,7 +348,7 @@ class _RegisterState extends State<Register> {
                                     onTap: () async {
                                       if (_formkey.currentState?.validate() == true)
                                       {
-                                        dynamic result = await _auth.registerWithEmailAndPassword(context,email, password,phonenumber);
+                                        dynamic result = await _auth.registerWithEmailAndPassword(context,email, password,phonenumber,fullName);
                                         if(result == null)
 
                                         {
