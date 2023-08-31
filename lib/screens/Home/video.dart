@@ -1,10 +1,19 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+import '../../Services/ThemeService.dart';
+import '../../constant.dart';
 import 'AppState.dart';
 import 'CustomDrawer.dart';
+import 'package:http/http.dart' as http;
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sign_in/Models/Font.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   const VideoPlayerScreen({super.key});
@@ -18,7 +27,9 @@ class VideoPlayerScreen extends StatefulWidget {
 
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-
+  final themeService _fontx = themeService();
+  var text = "";
+  bool isTranscribing = false;
   // Assuming you have a Firestore document with videoUrl and spokenText fields
 
   Future<Map<String, dynamic>> fetchVideoDataFromFirestore() async {
@@ -30,9 +41,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
     // Extract the video URL and spoken text
     String videoUrl = videoSnapshot.get('videoUrl');
-   // String spokenText = videoSnapshot.get('spokenText');
-
-    return {'videoUrl': videoUrl/*, 'spokenText': spokenText*/};
+    // String spokenText = videoSnapshot.get('spokenText');
+    String audio = videoSnapshot.get('audio');
+print(audio);
+    return {'videoUrl': videoUrl, 'audio': audio};
   }
 
   late VideoPlayerController _controller;
@@ -43,6 +55,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     super.initState();
     fetchAndInitializeVideo();
   }
+Future<String> fethAudio() async {
+  Map<String, dynamic> videoData = await fetchVideoDataFromFirestore();
+  String audio = videoData["audio"];
+    return audio;
+}
 
   Future<void> fetchAndInitializeVideo() async {
     // Fetch video URL from Firestore
@@ -58,6 +75,25 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           _isVideoLoaded = true; // Video is now loaded
         });
       });
+
+  }
+
+  Future<String> convertSpeechToText(String filePath) async {
+    const apiKey = apiSecretKey;
+    var url = Uri.https("api.openai.com", "v1/audio/transcriptions");
+    var request = http.MultipartRequest('POST', url);
+    request.headers.addAll({"Authorization": "Bearer $apiKey"});
+    request.fields["model"] = 'whisper-1';
+    request.fields["language"] = "en";
+
+    request.files.add(await http.MultipartFile.fromPath('file', filePath));
+
+    var response = await request.send();
+    var newResponse = await http.Response.fromStream(response);
+
+    final responseData = json.decode(newResponse.body);
+    return responseData['text'];
+     // Placeholder value
   }
 
 
@@ -66,49 +102,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     super.dispose();
     _controller.dispose();
   }
-  void _initSpeech() async {
-    _isListening = await _speech.initialize();
-    setState(() {});
-  }
-
-  final stt.SpeechToText _speech = stt.SpeechToText();
-  bool _isListening = false;
-  String _transcription = '';
-
-  Future<void> startListening() async {
-    print("Initializing speech recognition...");
-    bool available = await _speech.initialize();
-    print("Speech recognition initialized: $available");
 
 
 
-    if (available) {
-      _speech.listen(
-        onResult: (result) {
-          if (result.finalResult) {
-            setState(() {
-              _transcription = result.recognizedWords;
-            });
-          }
-        },
-
-      );
-
-      setState(() {
-        _isListening = true;
-      });
-    } else {
-      print("Speech recognition is not available or not initialized.");
-    }
-  }
 
 
-  void stopListening () async  {
-    _speech.stop();
-    setState(() {
-      _isListening = false;
-    });
-  }
+
+
 
 
   @override
@@ -116,7 +116,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     var appState = Provider.of<AppState>(context);
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.orangeAccent ,
-          title: Text('Video Player')),
+          title: Text( AppLocalizations.of(context)!.videoplayer, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
+              fontSize: Provider.of<AppState>(context).fontSize )) ) ,
       drawer: customDrawer(appState.selectedIndex, selectedPlanet: null,),
 
       body: Column(
@@ -128,20 +130,51 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           )
               : CircularProgressIndicator(), // Video player
           Divider(),
-          _isListening
-              ? Text("Listening...")
-              : ElevatedButton(
-            onPressed: startListening,
-            child: Text("Start Listening"),
+
+          Column(
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  if (!isTranscribing) {
+                    setState(() {
+                      isTranscribing = true;
+                    });
+                    final result = await FilePicker.platform.pickFiles();
+                    if (result != null) {
+                      convertSpeechToText(result.files.single.path!)
+                          .then((value) {
+                        setState(() {
+                          text = value;
+                          isTranscribing =
+                              false; // Transcription is completed or canceled
+                        });
+                      });
+                    } else {
+                      setState(() {
+                        isTranscribing = false; // Transcription is canceled
+                      });
+                    }
+                  }
+                },
+                child: Text("Start Transcription"),
+              ),
+              if (isTranscribing) CircularProgressIndicator(),
+              // Display the progress indicator when transcribing
+            ],
           ),
-          Text(_transcription),
-          _isListening
-              ? ElevatedButton(
-            onPressed: stopListening,
-            child: Text("Stop Listening"),
-          ): SizedBox(),
 
-
+          SizedBox(height: 10), // Add some spacing
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  text,
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          ),
 
         ],
       ),

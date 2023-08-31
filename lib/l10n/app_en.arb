@@ -38,6 +38,12 @@
   "addnote": "Add note",
   "welcomeToMyApp": "Welcome To My App",
   "getReadyforanamazingexpirience": "Get ready for an amazing expirience !",
-  "startExploring": "Start Exploring"
+  "startExploring": "Start Exploring",
+  "videoplayer": "Video Player",
+  "userdirectory" : "User Dierctory",
+  "imageswithdescription": "Images With Description",
+  "changelanguage": "Change Language"
+
+
 
 }

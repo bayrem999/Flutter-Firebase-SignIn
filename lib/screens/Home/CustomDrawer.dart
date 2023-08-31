@@ -92,10 +92,10 @@ class _customDrawerState extends State<customDrawer> {
          ),
           ),
           Semantics(
-            label:  AppLocalizations.of(context)!.arExperience,
+            label:  AppLocalizations.of(context)!.videoplayer,
             child: ListTile(
               leading: const Icon(Icons.video_collection_outlined),
-              title: Text(AppLocalizations.of(context)!.arExperience,  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              title: Text(AppLocalizations.of(context)!.videoplayer,  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
                   fontSize: Provider.of<AppState>(context).fontSize ),),
               onTap: () {
@@ -163,10 +163,10 @@ class _customDrawerState extends State<customDrawer> {
 
               ),
               Semantics(
-                label: "annuaire",
+                label: AppLocalizations.of(context)!.userdirectory,
                 child: ListTile(
                   leading: const Icon(Icons.group),
-                  title: Text("Annuaire",style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  title: Text( AppLocalizations.of(context)!.userdirectory, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontFamily: _fontx.getFontFamilyFromAppFont(Provider.of<AppState>(context).selectedFont),
                       fontSize: Provider.of<AppState>(context).fontSize )),
                   onTap: () {

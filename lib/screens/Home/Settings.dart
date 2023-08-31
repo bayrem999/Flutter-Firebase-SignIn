@@ -122,7 +122,20 @@ class _SettingsPageState extends State<SettingsPage> {
                   initialValue: Provider
                       .of<AppState>(context)
                       .isColorBlindModeEnabled,
-                  title: Text('Color Blind Mode'),
+                  title: Text('Color Blind Mode',
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(
+                      fontFamily:
+                      _getFontFamilyFromAppFont(Provider
+                          .of<AppState>(context)
+                          .selectedFont),
+                      fontSize: Provider
+                          .of<AppState>(context)
+                          .fontSize,
+                    ),),
                   leading: Icon(Icons.color_lens),
                   onToggle: (value) {
                     Provider
@@ -132,7 +145,20 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 SettingsTile(
                   leading: Icon(Icons.language),
-                  title: Text('Change Language'),
+                  title: Text(AppLocalizations.of(context)!.changelanguage,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(
+                      fontFamily:
+                      _getFontFamilyFromAppFont(Provider
+                          .of<AppState>(context)
+                          .selectedFont),
+                      fontSize: Provider
+                          .of<AppState>(context)
+                          .fontSize,
+                    ),),
                   onPressed: (_) {
                     showDialog(
                       context: context,

@@ -37,7 +37,10 @@ class _SignInState extends State<SignIn> {
               colors: [Color(0xFFE65100), Color(0xFFEF6C00), Color(0xFFFFA726)],
             ),
           ),
-          child: ListView( // Use ListView instead of Column
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+
             children: <Widget>[
               const SizedBox(height: 10,),
               const Padding(
